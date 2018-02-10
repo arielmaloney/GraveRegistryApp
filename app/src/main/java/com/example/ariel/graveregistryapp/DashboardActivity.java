@@ -10,4 +10,8 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
     }
+
+    void testMethod() {
+        // this does nothing its a test -- Ariel
+    }
 }
