@@ -11,7 +11,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".DashboardActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".GraveRegistryActivity" />
+        <activity android:name=".VerifiableActivity" />
+        <activity android:name=".VerifiableEntityActivity" />
+        <activity android:name=".PastSubsActivity" />
+        <activity android:name=".ChangeSubActivity"></activity>
     </application>
 
 </manifest>
