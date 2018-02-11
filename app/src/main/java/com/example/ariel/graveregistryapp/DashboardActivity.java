@@ -14,4 +14,8 @@ public class DashboardActivity extends AppCompatActivity {
     void testMethod() {
         // this does nothing its a test -- Ariel
     }
+
+    void testMethodHollyCallowa() {
+        // this also does nothing. -- Holly
+    }
 }
