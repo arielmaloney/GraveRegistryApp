@@ -21,7 +21,7 @@
         <activity android:name=".VerifiableActivity" />
         <activity android:name=".VerifiableEntityActivity" />
         <activity android:name=".PastSubsActivity" />
-        <activity android:name=".ChangeSubActivity"></activity>
+        <activity android:name=".ChangeSubActivity" />
     </application>
 
 </manifest>

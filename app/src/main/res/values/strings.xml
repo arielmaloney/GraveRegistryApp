@@ -1,16 +1,15 @@
 <resources>
     <string name="app_name">GraveRegistryApp</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
-    <string name="email_signin">Email</string>
-    <string name="password_signin">Password</string>
     <string name="sign_up_now"><u>Sign Up Now</u></string>
     <string name="log_in">Log In</string>
     <string name="logo">logo</string>
     <string name="register">Register</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="last_name">Last Name</string>
-    <string name="first_name">First Name</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
     <string name="already_have_an_account">Already have an account?</string>
-    <string name="sign_in_now"><u>Sign In Now</u></string>
+    <string name="log_in_now"><u>Log In Now</u></string>
+    <string name="confirm_password">Confirm Password</string>
 </resources>

@@ -17,22 +17,20 @@
         android:text="@string/log_in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.196"
         tools:text="Log In" />
 
     <TextView
         android:id="@+id/tv_noaccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="69dp"
-        android:layout_marginLeft="69dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginStart="120dp"
         android:text="@string/don_t_have_an_account"
-        app:layout_constraintEnd_toStartOf="@+id/tv_signUpNow"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_button" />
 
@@ -40,54 +38,54 @@
         android:id="@+id/tv_signUpNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="77dp"
-        android:layout_marginRight="77dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginRight="152dp"
+        android:layout_marginStart="154dp"
+        android:layout_marginLeft="154dp"
         android:clickable="true"
+        android:focusable="true"
         android:onClick="goToRegister"
         android:text="@string/sign_up_now"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
-        tools:text="Sign Up Now" android:focusable="true" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_noaccount"
+        tools:text="Sign Up Now" />
 
     <EditText
         android:id="@+id/et_email_signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="85dp"
         android:layout_marginRight="85dp"
         android:layout_marginStart="84dp"
         android:layout_marginLeft="84dp"
         android:ems="10"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:text="@string/email_signin"
         app:layout_constraintBottom_toTopOf="@+id/et_password_signin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Email" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_password_signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="85dp"
         android:layout_marginRight="85dp"
         android:layout_marginStart="84dp"
         android:layout_marginLeft="84dp"
         android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        android:text="@string/password_signin"
         app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Password" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/iv_grLogo"
-        android:layout_width="235dp"
-        android:layout_height="238dp"
+        android:layout_width="326dp"
+        android:layout_height="295dp"
         android:layout_marginEnd="83dp"
         android:layout_marginRight="83dp"
         android:layout_marginStart="84dp"
