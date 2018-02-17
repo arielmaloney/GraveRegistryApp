@@ -14,7 +14,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="register_grave">Register Grave</string>
     <string name="welcome">Welcome</string>
-=======
+
     <string name="conflict" translatable="false" >Conflict</string>
     <string name="rank">Rank</string>
     <string name="middle_name">Middle Name/Initial</string>
@@ -32,5 +32,4 @@
         <item>Fair</item>
         <item>Poor</item>
     </string-array>
->>>>>>> GraveRegistryActivity_byHolly
 </resources>

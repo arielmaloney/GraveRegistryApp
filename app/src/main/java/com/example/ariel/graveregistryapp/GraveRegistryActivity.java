@@ -8,10 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class GraveRegistryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class GraveRegistryActivity extends AppCompatActivity implements
+        AdapterView.OnItemSelectedListener{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grave_registry);
 
@@ -19,9 +21,13 @@ public class GraveRegistryActivity extends AppCompatActivity implements AdapterV
     //spinner_condition is the name of the ID in the activity_grave_registry.xml
     Spinner spinner = findViewById(R.id.spinner_condition);
 
-    //This creates a custom adapter (fills our spinner with text) from the array we made in strings.xml, labeled "condition"
+    //This creates a custom adapter (fills our spinner with text) from the array we made in
+        // strings.xml, labeled "condition"
     //simple_spinner_item is a custom layout given by android
-    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.condition, android.R.layout.simple_spinner_item);
+    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.condition,
+            android.R.layout.simple_spinner_item);
 
     //This sets the layout for the drop down item
     //simple_spinner_dropdown_item is a custom layout given by android
@@ -34,22 +40,19 @@ public class GraveRegistryActivity extends AppCompatActivity implements AdapterV
     //This allows our spinner to listen for the selected items from the drop down
     spinner.setOnItemSelectedListener(this);
 
+    //Sets default "hint" for spinner
     spinner.setPrompt("Select Condition");
 
     }
     /**
      * This method is override from the AdapterView.OnItemSelectedListener
      * It details what the spinner will do when an item is selected
+     * It also can pop-up what you've selected at the bottom - I've not dont that
      * parameters: AdapterView - the parent, View - view, i - position, l - time for Toast
      */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
     {
-        String text = adapterView.getItemAtPosition(i).toString();
-
-        //Toast provides simple feedback about an operation in a small popup
-        //Automatically disappears after action is taken or a time is given (l)
-        Toast.makeText(adapterView.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -58,7 +61,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements AdapterV
      * parameters: AdapterView - the parent
      */
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+    public void onNothingSelected(AdapterView<?> adapterView)
+    {
     }
 }
