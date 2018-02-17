@@ -40,14 +40,11 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     //This allows our spinner to listen for the selected items from the drop down
     spinner.setOnItemSelectedListener(this);
 
-    //Sets default "hint" for spinner
-    spinner.setPrompt("Select Condition");
-
     }
     /**
      * This method is override from the AdapterView.OnItemSelectedListener
      * It details what the spinner will do when an item is selected
-     * It also can pop-up what you've selected at the bottom - I've not dont that
+     * It also can pop-up what you've selected at the bottom - I've not done that
      * parameters: AdapterView - the parent, View - view, i - position, l - time for Toast
      */
     @Override
