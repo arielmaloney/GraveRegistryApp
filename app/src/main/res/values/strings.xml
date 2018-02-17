@@ -31,5 +31,6 @@
         <item>Good</item>
         <item>Fair</item>
         <item>Poor</item>
+        <item>Damaged</item>
     </string-array>
 </resources>
