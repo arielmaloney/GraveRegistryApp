@@ -12,4 +12,6 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="log_in_now"><u>Log In Now</u></string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="register_grave">Register Grave</string>
+    <string name="welcome">Welcome</string>
 </resources>
