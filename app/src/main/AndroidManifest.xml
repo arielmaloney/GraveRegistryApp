@@ -11,19 +11,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".DashboardActivity"
+            android:label="@string/dashboard" >
+        </activity>
+        <activity android:name=".LoginActivity"
+            android:label="Grave Registry Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".GraveRegistryActivity" />
-        <activity android:name=".VerifiableActivity" />
-        <activity android:name=".VerifiableEntityActivity" />
-        <activity android:name=".PastSubsActivity" />
-        <activity android:name=".ChangeSubActivity" />
+        <activity android:name=".RegisterActivity"
+            android:label="Register" />
+        <activity android:name=".GraveRegistryActivity"
+            android:label="Register Grave" />
+        <activity android:name=".VerifiableActivity"
+            android:label="Verifiable Graves" />
+        <activity android:name=".VerifiableEntityActivity"
+            android:label="Verify Grave" />
+        <activity android:name=".PastSubsActivity"
+            android:label="Past Submissions" />
+        <activity android:name=".ChangeSubActivity"
+            android:label="Suggest Changes" />
     </application>
 
 </manifest>
