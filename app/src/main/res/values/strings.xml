@@ -26,6 +26,8 @@
     <string name="submit_button">Submit</string>
     <string name="bronze_holder_present">Bronze Holder Present?</string>
     <string name="condition">Select Condition</string>
+    <string name="view_past_submissions">View Past Submissions</string>
+    <string name="verify_grave" >Verify Grave</string>
     <string-array name ="condition">
         <item>Select Condition</item>
         <item>Good</item>

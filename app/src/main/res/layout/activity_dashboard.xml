@@ -9,27 +9,92 @@
     <TextView
         android:id="@+id/tvWelcomeMessage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/welcome"
         android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logoImg"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/logoImg"
+        android:layout_width="165dp"
+        android:layout_height="147dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ngr_logo" />
 
     <Button
         android:id="@+id/graveRegButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="287dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="119dp"
+        android:layout_width="144dp"
+        android:layout_height="51dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
         android:text="@string/register_grave"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage" />
+
+    <Button
+        android:id="@+id/verifyGraveButton"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/verify_grave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/graveRegButton" />
+
+    <Button
+        android:id="@+id/viewPastSubButton"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/view_past_submissions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verifyGraveButton" />
+
+    <TextView
+        android:id="@+id/firstnameTxt"
+        android:layout_width="77dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/first_name"
+        app:layout_constraintBottom_toTopOf="@+id/graveRegButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage"
+        android:layout_marginLeft="132dp" />
+
+    <TextView
+        android:id="@+id/lastnameTxt"
+        android:layout_width="77dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="132dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/last_name"
+        app:layout_constraintBottom_toTopOf="@+id/graveRegButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/firstnameTxt"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage"
+        android:layout_marginRight="132dp"
+        android:layout_marginLeft="8dp" />
 </android.support.constraint.ConstraintLayout>
