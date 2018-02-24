@@ -166,7 +166,7 @@
 
             <CheckBox
                 android:id="@+id/cb_bronzeHolder"
-                android:layout_width="match_parent"
+                android:layout_width="299dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="64dp"
                 android:layout_marginStart="64dp"
@@ -182,7 +182,7 @@
 
             <CheckBox
                 android:id="@+id/cb_flag"
-                android:layout_width="match_parent"
+                android:layout_width="299dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="64dp"

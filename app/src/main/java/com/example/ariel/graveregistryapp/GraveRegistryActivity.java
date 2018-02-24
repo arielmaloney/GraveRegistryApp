@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class GraveRegistryActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener{
