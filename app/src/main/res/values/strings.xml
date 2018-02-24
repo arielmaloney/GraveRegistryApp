@@ -15,6 +15,7 @@
     <string name="register_grave">Register Grave</string>
     <string name="welcome">Welcome</string>
     <string name="dashboard">Dashboard</string>
+    <string name="user_name">User name</string>
 
     <string name="conflict" translatable="false" >Conflict</string>
     <string name="rank">Rank</string>
@@ -29,6 +30,7 @@
     <string name="condition">Select Condition</string>
     <string name="view_past_submissions">View Past Submissions</string>
     <string name="verify_grave" >Verify Grave</string>
+    <string name="logout">Logout</string>
     <string-array name ="condition">
         <item>Select Condition</item>
         <item>Good</item>

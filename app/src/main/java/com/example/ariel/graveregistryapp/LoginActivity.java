@@ -16,8 +16,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Retrieves the values from the EditText fields
-        final EditText signin_email = (EditText) findViewById(R.id.et_email_signin);
-        final EditText signin_password = (EditText) findViewById(R.id.et_password_signin);
+        final EditText signin_email = findViewById(R.id.et_email_signin);
+        final EditText signin_password = findViewById(R.id.et_password_signin);
         final Button signInButton = findViewById(R.id.sign_in_button);
 
 
@@ -45,14 +45,15 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 // On Sign In button click will transfer User to Dashboard
-                Intent i = new Intent(LoginActivity.this, DashboardActivity.class);
-                startActivity(i);
+                Intent iDashboard = new Intent(LoginActivity.this, DashboardActivity.class);
+                startActivity(iDashboard);
 
             }
         });
     }
 
     // Sends the User to the Register Activity when the TextView is clicked
+    // android:onClick="goToRegister" is placed in the xml for the TextView
     public void goToRegister(View view)
     {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);

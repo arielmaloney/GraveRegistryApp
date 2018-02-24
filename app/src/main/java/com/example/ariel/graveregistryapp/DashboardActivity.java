@@ -17,6 +17,7 @@ public class DashboardActivity extends AppCompatActivity {
         final TextView welcomeMsg = findViewById(R.id.tvWelcomeMessage);
 
         final Button graveRegButton = findViewById(R.id.graveRegButton);
+        final Button logoutButton = findViewById(R.id.logoutButton);
 
         graveRegButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -25,6 +26,14 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(iGraveReg);
             }
 
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // On Logout button click will Logout User and transfer back to Login page
+                Intent iLogin = new Intent(DashboardActivity.this, LoginActivity.class);
+                startActivity(iLogin);
+            }
         });
     }
 
