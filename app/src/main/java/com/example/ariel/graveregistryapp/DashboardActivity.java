@@ -19,6 +19,7 @@ public class DashboardActivity extends AppCompatActivity {
         final Button graveRegButton = findViewById(R.id.graveRegButton);
         final Button logoutButton = findViewById(R.id.logoutButton);
 
+
         graveRegButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // On Grave Registry button click will transfer User to Grave Registry Activity
