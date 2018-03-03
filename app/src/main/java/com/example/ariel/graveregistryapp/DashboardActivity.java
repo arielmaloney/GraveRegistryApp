@@ -14,7 +14,14 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        final TextView welcomeMsg = findViewById(R.id.tvWelcomeMessage);
+        // Gets intent and email from extra
+        Intent intent = getIntent();
+        String intentEmail = intent.getStringExtra("UserEmail");
+
+        // Sets the TextView to the email
+        TextView welcomeMsg = findViewById(R.id.tvWelcomeMessage);
+        TextView userEmail = findViewById(R.id.firstnameTxt);
+        userEmail.setText(intentEmail);
 
         final Button graveRegButton = findViewById(R.id.graveRegButton);
         final Button verifyGraveButton = findViewById(R.id.verifyGraveButton);
