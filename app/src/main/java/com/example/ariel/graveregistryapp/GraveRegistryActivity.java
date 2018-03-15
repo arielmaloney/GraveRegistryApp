@@ -1,6 +1,14 @@
 package com.example.ariel.graveregistryapp;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +29,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class GraveRegistryActivity extends AppCompatActivity implements
@@ -31,23 +42,33 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     // EditText variables to hold Edit Text values
     EditText et_firstname, et_middlename, et_lastname, et_cemetery, et_conflict, et_rank, et_unit, et_subunit;
 
+    //TextView variables
+    TextView locationText;
+
     // Checkbox
     CheckBox cb_flag_pres, cb_bronze;
 
     // Submit Button field
-    Button submitButton;
+    Button submitButton, coordinatesButton;
 
     // Spinner field
     Spinner spinner;
 
     // String variables to hold Edit Text values
     String st_userID, st_firstname, st_middlename, st_lastname, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
+    String st_coordinates = "placeholder";
 
     // Volley Request Queue
     RequestQueue requestQueue;
 
     // Session Manager
     SessionManager session;
+
+    // GPS Tracker
+    GPSTracker gps;
+
+    // Location Manager
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,6 +82,11 @@ public class GraveRegistryActivity extends AppCompatActivity implements
 
         // Create button
         submitButton = findViewById(R.id.submit_button);
+        coordinatesButton = findViewById(R.id.coordinates_button);
+
+        // Getting locationText TextView
+        locationText = findViewById(R.id.locationText);
+
 
         // Getting EditTexts objects
         et_firstname = findViewById(R.id.et_firstName);
@@ -98,6 +124,24 @@ public class GraveRegistryActivity extends AppCompatActivity implements
 
         //This allows our spinner to listen for the selected items from the drop down
         spinner.setOnItemSelectedListener(this);
+
+
+        //Sets a OnClickListener to wait for the Get Coordinates Button to be clicked and populate the latitude and longitutde
+        coordinatesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                gps = new GPSTracker(getApplicationContext());
+                double lat = gps.getLatitude();
+                double lon = gps.getLongitude();
+                Toast.makeText(getApplicationContext(), "Current location:\n" +
+                        "Latitude: " + String.format( "%.2f", lat) + "\n" +
+                        "Longitude: " + String.format("%.2f", lon), Toast.LENGTH_LONG).show();
+                st_coordinates = "Latitude: " + lat + "  Longitude: " + lon;
+                locationText.setText("Current Coordinates:\nLatitude: " + String.format( "%.2f", lat) + "\n" +
+                        "Longitude: " + String.format("%.2f", lon));
+            }
+
+        });
 
         //Sets a OnClickListener to wait for the Grave Registry Button to be clicked and navigate the User
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +185,9 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                     Toast.makeText(GraveRegistryActivity.this, "Conflict is required.", Toast.LENGTH_SHORT). show();
                     return;
                 }
+                else if (st_coordinates.matches("placeholder")) {
+                    Toast.makeText(GraveRegistryActivity.this, "Click the 'Get Coordinates' button to save your location", Toast.LENGTH_SHORT).show();
+                }
                 else {
 
                     registerGraveMarker();
@@ -151,6 +198,9 @@ public class GraveRegistryActivity extends AppCompatActivity implements
         });
 
     }
+
+
+
 
     /**
      * This method is override from the AdapterView.OnItemSelectedListener
@@ -217,6 +267,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                 params.put("unit", st_unit);
                 params.put("sub_unit", st_subunit);
                 params.put("cemetery", st_cemetery);
+                params.put("coordinates", st_coordinates);
                 params.put("the_condition", st_condition);
                 params.put("flag_present", has_flag);
                 params.put("holder_present", has_holder);

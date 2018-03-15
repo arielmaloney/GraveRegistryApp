@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ariel.graveregistryapp.GraveRegistryActivity">
+    tools:context="com.example.ariel.graveregistryapp.GraveRegistryActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <Button
         android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/submit_button"
         android:visibility="visible"
@@ -24,8 +27,9 @@
         android:id="@+id/scrollView2"
         android:layout_width="375dp"
         android:layout_height="449dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -85,18 +89,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_subUnit" />
 
-            <EditText
-                android:id="@+id/et_gpsCoordinates"
+            <Button
+                android:id="@+id/coordinates_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/gps_coordinates"
-                android:inputType="numberDecimal"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_cemetery" />
+                android:text="@string/coordinates_button" />
+
+            <TextView
+                android:id="@+id/locationText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/current_location"
+                tools:text="@string/current_location" />
 
             <EditText
                 android:id="@+id/et_conflict"

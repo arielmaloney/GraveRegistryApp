@@ -24,8 +24,10 @@
     <string name="sub_unit">Sub-unit</string>
     <string name="cemetery">Cemetery</string>
     <string name="gps_coordinates">GPS Coordinates</string>
+    <string name="current_location">Current Coordinates: \nLatitude: Click \'Get Coordinates\'\nLongitude: Click \'Get Coordinates\'</string>
     <string name="flag_present">Flag Present?</string>
     <string name="submit_button">Submit</string>
+    <string name="coordinates_button">Get Coordinates</string>
     <string name="bronze_holder_present">Bronze Holder Present?</string>
     <string name="condition">Select Condition</string>
     <string name="view_past_submissions">View Past Submissions</string>
