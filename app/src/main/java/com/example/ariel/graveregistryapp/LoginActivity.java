@@ -40,10 +40,15 @@ public class LoginActivity extends AppCompatActivity {
     // The url for the login_user php file
     String HttpUrl = "http://10.0.2.2/login_user.php";
 
+    // Session Manager
+    SessionManager session;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        session = new SessionManager(getApplicationContext());
 
         // Retrieves the values from the EditText fields
         signin_email = findViewById(R.id.et_email_signin);
@@ -98,16 +103,14 @@ public class LoginActivity extends AppCompatActivity {
                                         // If response matched then show the toast.
                                         Toast.makeText(LoginActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
 
-                                        // Finish the current Login activity.
-                                        finish();
+                                        session.createLoginSession(signin_email_string);
 
                                         // Opening the user profile activity using intent.
                                         Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-
-                                        //Sending User Email to another activity using intent.
-                                        intent.putExtra("UserEmail", signin_email_string);
-
+                                        //intent.putExtra("email", signin_email_string);
                                         startActivity(intent);
+                                        // Finish the current Login activity.
+                                        finish();
                                     }
                                     else {
 

@@ -3,25 +3,46 @@ package com.example.ariel.graveregistryapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class DashboardActivity extends AppCompatActivity {
+
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        // Gets intent and email from extra
-        Intent intent = getIntent();
-        String intentEmail = intent.getStringExtra("UserEmail");
 
-        // Sets the TextView to the email
+        session = new SessionManager(getApplicationContext());
+        HashMap<String, String> userDetails = session.getUserDetails();
+        String fn = userDetails.get(SessionManager.KEY_FIRSTNAME);
+        String ln = userDetails.get(SessionManager.KEY_LASTNAME);
+        Toast.makeText(getApplicationContext(), "fn: " + fn, Toast.LENGTH_LONG).show();
+
+        //String incomingEmail = getIntent().getStringExtra("email");
+
+        // Sets the TextView to the users first and last name
         TextView welcomeMsg = findViewById(R.id.tvWelcomeMessage);
-        TextView userEmail = findViewById(R.id.firstnameTxt);
-        userEmail.setText(intentEmail);
+        TextView displayName = findViewById(R.id.firstnameTxt);
+        displayName.setText(fn + " " + ln);
 
         final Button graveRegButton = findViewById(R.id.graveRegButton);
         final Button verifyGraveButton = findViewById(R.id.verifyGraveButton);
@@ -68,5 +89,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
