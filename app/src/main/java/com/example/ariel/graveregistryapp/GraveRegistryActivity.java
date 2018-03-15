@@ -41,16 +41,23 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     Spinner spinner;
 
     // String variables to hold Edit Text values
-    String st_firstname, st_middlename, st_lastname, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
+    String st_userID, st_firstname, st_middlename, st_lastname, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
 
     // Volley Request Queue
     RequestQueue requestQueue;
+
+    // Session Manager
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grave_registry);
+
+        session = new SessionManager(getApplicationContext());
+        HashMap<String, String> userDetails = session.getUserDetails();
+        st_userID = userDetails.get(SessionManager.KEY_USERID);
 
         // Create button
         submitButton = findViewById(R.id.submit_button);
@@ -201,6 +208,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                 Map<String, String> params = new HashMap<>();
 
                 // Adding All values to Params.
+                params.put("user", st_userID);
                 params.put("conflict", st_conflict);
                 params.put("rank", st_rank);
                 params.put("first_name", st_firstname);
