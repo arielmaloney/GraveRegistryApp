@@ -56,7 +56,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
 
     // String variables to hold Edit Text values
     String st_userID, st_firstname, st_middlename, st_lastname, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
-    String st_coordinates = "placeholder";
+    String st_coordinates = "";
 
     // Volley Request Queue
     RequestQueue requestQueue;
@@ -66,9 +66,6 @@ public class GraveRegistryActivity extends AppCompatActivity implements
 
     // GPS Tracker
     GPSTracker gps;
-
-    // Location Manager
-    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -185,8 +182,9 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                     Toast.makeText(GraveRegistryActivity.this, "Conflict is required.", Toast.LENGTH_SHORT). show();
                     return;
                 }
-                else if (st_coordinates.matches("placeholder")) {
+                else if (st_coordinates.matches("")) {
                     Toast.makeText(GraveRegistryActivity.this, "Click the 'Get Coordinates' button to save your location", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else {
 

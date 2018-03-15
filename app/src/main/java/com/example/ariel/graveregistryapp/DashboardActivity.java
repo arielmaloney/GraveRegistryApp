@@ -32,12 +32,10 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         session = new SessionManager(getApplicationContext());
+        session.checkLogin();
         HashMap<String, String> userDetails = session.getUserDetails();
         String fn = userDetails.get(SessionManager.KEY_FIRSTNAME);
         String ln = userDetails.get(SessionManager.KEY_LASTNAME);
-        Toast.makeText(getApplicationContext(), "fn: " + fn, Toast.LENGTH_LONG).show();
-
-        //String incomingEmail = getIntent().getStringExtra("email");
 
         // Sets the TextView to the users first and last name
         TextView welcomeMsg = findViewById(R.id.tvWelcomeMessage);
@@ -86,6 +84,8 @@ public class DashboardActivity extends AppCompatActivity {
                 // On Logout button click will Logout User and transfer back to Login page
                 Intent iLogin = new Intent(DashboardActivity.this, LoginActivity.class);
                 startActivity(iLogin);
+                session.logoutUser();
+                finish();
             }
         });
     }

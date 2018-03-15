@@ -107,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                         // Opening the user profile activity using intent.
                                         Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-                                        //intent.putExtra("email", signin_email_string);
                                         startActivity(intent);
                                         // Finish the current Login activity.
                                         finish();

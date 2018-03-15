@@ -86,12 +86,6 @@ public class SessionManager {
         // Initialize a new RequestQueue instance
         RequestQueue requestQueue = Volley.newRequestQueue(_context);
 
-        //Hashmap of parameters
-        //Map<String, String> params = new HashMap();
-        //params.put("email", useremail);
-
-        //JSONObject parameters = new JSONObject(params);
-
         // Initialize a new JsonObjectRequest instance
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -100,9 +94,6 @@ public class SessionManager {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // Do something with response
-                        Toast.makeText(_context, "success: " + response.toString(), Toast.LENGTH_SHORT).show();
-
                         // Process the JSON
                         try{
 
@@ -133,65 +124,7 @@ public class SessionManager {
         editor.commit();
     }
 
-    /**
-     * Gets User information from database and stores it in the session
-     */
-
-    public void getUserInfo() {
-
-        String HTTP_URL = "http://10.0.2.2/select_user.php?email=" + useremail;
-
-        // Initialize a new RequestQueue instance
-        RequestQueue requestQueue = Volley.newRequestQueue(_context);
-
-        //Hashmap of parameters
-        //Map<String, String> params = new HashMap();
-        //params.put("email", useremail);
-
-        //JSONObject parameters = new JSONObject(params);
-
-        // Initialize a new JsonObjectRequest instance
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                HTTP_URL,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Do something with response
-                        Toast.makeText(_context, "success: " + response.toString(), Toast.LENGTH_SHORT).show();
-
-                        // Process the JSON
-                        try{
-
-                            firstname = response.getString("userFirstName");
-                            lastname = response.getString("userLastName");
-                            userid = response.getString("userID");
-                            Toast.makeText(_context, firstname + lastname + userid, Toast.LENGTH_LONG).show();
-
-
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(_context, e.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
-                        Toast.makeText(_context, error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-
-        // Add JsonObjectRequest to the RequestQueue
-        requestQueue.add(jsonObjectRequest);
-
-
-    }
-
-    /**
+        /**
      * Check login method wil check user login status
      * If false it will redirect user to login page
      * Else won't do anything
@@ -222,7 +155,6 @@ public class SessionManager {
         HashMap<String, String> user = new HashMap<String, String>();
         // user first name
         user.put(KEY_FIRSTNAME, pref.getString(KEY_FIRSTNAME, null));
-        Toast.makeText(_context, pref.getString(KEY_FIRSTNAME, null), Toast.LENGTH_LONG).show();
 
         // user last name
         user.put(KEY_LASTNAME, pref.getString(KEY_LASTNAME, null));
@@ -255,6 +187,7 @@ public class SessionManager {
 
         // Staring Login Activity
         _context.startActivity(i);
+        //Toast.makeText(_context, "Please log in or create an account", Toast.LENGTH_SHORT).show();
     }
 
     /**
