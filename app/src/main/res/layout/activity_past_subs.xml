@@ -6,4 +6,58 @@
     android:layout_height="match_parent"
     tools:context="com.example.ariel.graveregistryapp.PastSubsActivity">
 
+    <TextView
+        android:id="@+id/user_displayName"
+        android:layout_width="258dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="135dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/first_name"
+        tools:textAlignment="center"
+        tools:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/num_past_sub"
+        android:layout_width="234dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_displayName"
+        tools:text="@string/num_submissions"
+        tools:textAlignment="center" />
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="368dp"
+        android:layout_height="431dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/num_past_sub">
+
+        <TextView
+            android:id="@+id/entries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/dashboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/num_past_sub" />
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

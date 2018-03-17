@@ -16,6 +16,7 @@
     <string name="welcome">Welcome</string>
     <string name="dashboard">Dashboard</string>
     <string name="user_name">User name</string>
+    <string name="num_submissions">Number of Past Submissions: </string>
 
     <string name="conflict" translatable="false" >Conflict</string>
     <string name="rank">Rank</string>
