@@ -17,6 +17,9 @@
     <string name="dashboard">Dashboard</string>
     <string name="user_name">User name</string>
     <string name="num_submissions">Number of Past Submissions: </string>
+    <string name="choose_grave">Choose an entry to verify:</string>
+    <string name="verify_accurate">Verify Entry as Accurate</string>
+    <string name="change_submission">Suggest a Change</string>
 
     <string name="conflict" translatable="false" >Conflict</string>
     <string name="rank">Rank</string>
