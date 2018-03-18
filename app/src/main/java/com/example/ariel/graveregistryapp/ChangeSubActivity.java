@@ -60,6 +60,9 @@ public class ChangeSubActivity extends AppCompatActivity implements
     // GPS Tracker
     GPSTracker gps;
 
+    // Hashmap of populated inputs
+    HashMap<String, String> entryData = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +74,21 @@ public class ChangeSubActivity extends AppCompatActivity implements
         userID = user.get(SessionManager.KEY_USERID);
 
         // Gets original Marker id from past activity
-        Intent intent = getIntent();
-        originalID = intent.getStringExtra("entryID");
+        Intent previousIntent = getIntent();
+        originalID = previousIntent.getStringExtra("entryId");
+        String firstName = previousIntent.getStringExtra("first_name");
+        String middleName = previousIntent.getStringExtra("middle_name");
+        String lastName = previousIntent.getStringExtra("last_name");
+        String cemetery = previousIntent.getStringExtra("cemetery");
+        String conflict = previousIntent.getStringExtra("conflict");
+        String rank = previousIntent.getStringExtra("rank");
+        String unit = previousIntent.getStringExtra("unit");
+        String subUnit = previousIntent.getStringExtra("subUnit");
+        String holder = previousIntent.getStringExtra("holder");
+        String flag = previousIntent.getStringExtra("flag");
+        String condition = previousIntent.getStringExtra("condition");
+        double lat = Double.parseDouble(previousIntent.getStringExtra("lat"));
+        double lon = Double.parseDouble(previousIntent.getStringExtra("lon"));
 
         // Create button
         submitButton = findViewById(R.id.submit_button);
@@ -80,21 +96,43 @@ public class ChangeSubActivity extends AppCompatActivity implements
 
         // Getting locationText TextView
         locationText = findViewById(R.id.locationText);
+        locationText.setText("Current Coordinates:\nLatitude: " + String.format( "%.2f", lat) + "\n" +
+                "Longitude: " + String.format("%.2f", lon));
+        st_coordinates = "Latitude: " + lat + "  Longitude: " + lon;
 
 
         // Getting EditTexts objects
         et_firstname = findViewById(R.id.et_firstName);
+        et_firstname.setText(firstName);
         et_middlename = findViewById(R.id.et_middleName);
+        et_middlename.setText(middleName);
         et_lastname = findViewById(R.id.et_lastName);
+        et_lastname.setText(lastName);
         et_cemetery = findViewById(R.id.et_cemetery);
+        et_cemetery.setText(cemetery);
         et_conflict = findViewById(R.id.et_conflict);
+        et_conflict.setText(conflict);
         et_rank = findViewById(R.id.et_rank);
+        et_rank.setText(rank);
         et_unit = findViewById(R.id.et_unit);
+        et_unit.setText(unit);
         et_subunit = findViewById(R.id.et_subUnit);
+        et_subunit.setText(subUnit);
 
-        // Gets checkbox objects
+        boolean bronzeBool = false;
+        boolean flagBool = false;
+        if (!holder.matches("0")) {
+            bronzeBool = true;
+        }
+        if (!flag.matches("0")) {
+            flagBool = true;
+        }
+
+        // Gets and sets checkbox objects
         cb_bronze = findViewById(R.id.cb_bronzeHolder);
         cb_flag_pres = findViewById(R.id.cb_flag);
+        cb_bronze.setChecked(bronzeBool);
+        cb_flag_pres.setChecked(flagBool);
 
         //This will populate the drop down items for the condition of the grave
         //spinner_condition is the name of the ID in the activity_grave_registry.xml
@@ -119,7 +157,8 @@ public class ChangeSubActivity extends AppCompatActivity implements
         //This allows our spinner to listen for the selected items from the drop down
         spinner.setOnItemSelectedListener(this);
 
-        populateEditTexts(originalID);
+        // Sets the spinner at the submitted value
+        spinner.setSelection(getIndex(spinner, condition));
 
 
         //Sets a OnClickListener to wait for the Get Coordinates Button to be clicked and populate the latitude and longitutde
@@ -279,39 +318,29 @@ public class ChangeSubActivity extends AppCompatActivity implements
 
                             JSONArray array = response.getJSONArray("populateEditTexts");
 
-                            //Loop through the array elements
-                            for(int i = array.length() - 1; i >= 0; i--) {
-                                // Get current JSON object
-                                JSONObject entry = array.getJSONObject(i);
+                            // Get current JSON object
+                            JSONObject entry = array.getJSONObject(0);
 
-                                //Get current data
-                                String conflict = entry.getString("conflict");
-                                String rank = entry.getString("rank");
-                                String firstName = entry.getString("first_name") + " ";
-                                String lastName = entry.getString("last_name");
-                                String middleName = entry.getString("middle_name") + " ";
-                                String unit = entry.getString("unit");
-                                String subUnit = entry.getString("sub_unit");
-                                String cemetery = entry.getString("cemetery");
-                                String coordinates = entry.getString("coordinates");
-                                String[] coordArray = coordinates.split(" ");
-                                String condition = entry.getString("the_condition");
-                                String flagPresent = entry.getString("flag_present");
-                                String holderPresent = entry.getString("holder_present");
+                            //Get current data
+                            String conflict = entry.getString("conflict");
+                            String rank = entry.getString("rank");
+                            String firstName = entry.getString("first_name") + " ";
+                            String lastName = entry.getString("last_name");
+                            String middleName = entry.getString("middle_name") + " ";
+                            String unit = entry.getString("unit");
+                            String subUnit = entry.getString("sub_unit");
+                            String cemetery = entry.getString("cemetery");
+                            String coordinates = entry.getString("coordinates");
+                            String[] coordArray = coordinates.split(" ");
+                            String condition = entry.getString("the_condition");
+                            String flagPresent = entry.getString("flag_present");
+                            String holderPresent = entry.getString("holder_present");
 
-                                et_firstname.setText(firstName);
-                                et_middlename.setText(middleName);
-                                et_lastname.setText(lastName);
-                                et_cemetery.setText(cemetery);
-                                et_conflict.setText(conflict);
-                                et_rank.setText(rank);
-                                et_unit.setText(unit);
-                                et_subunit.setText(subUnit);
+                            entryData.put("firstName", firstName);
+                            entryData.put("lastName", lastName);
 
-                                locationText.setText("Current Coordinates:\nLatitude: " + String.format( "%.2f", coordArray[1]) + "\n" +
-                                        "Longitude: " + String.format("%.2f", coordArray[4]));
-
-                            }
+                            //locationText.setText("Current Coordinates:\nLatitude: " + String.format( "%.2f", coordArray[1]) + "\n" +
+                                        //"Longitude: " + String.format("%.2f", coordArray[4]));
 
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -352,5 +381,18 @@ public class ChangeSubActivity extends AppCompatActivity implements
     @Override
     public void onNothingSelected(AdapterView<?> adapterView)
     {
+    }
+
+    private int getIndex(Spinner spinner, String myString)
+    {
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }

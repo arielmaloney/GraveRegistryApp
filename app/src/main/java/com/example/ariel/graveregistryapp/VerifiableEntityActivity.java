@@ -33,6 +33,8 @@ public class VerifiableEntityActivity extends AppCompatActivity {
 
     String entryID;
 
+    String st_conflict, st_rank, st_firstName, st_middleName, st_lastName, st_unit, st_subUnit, st_lat, st_lon, st_cemetery, st_condition, st_flag, st_holder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,21 @@ public class VerifiableEntityActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent change = new Intent(VerifiableEntityActivity.this, ChangeSubActivity.class);
                 change.putExtra("entryId", entryID);
+                change.putExtra("conflict", st_conflict);
+                change.putExtra("rank", st_rank);
+                change.putExtra("first_name", st_firstName);
+                change.putExtra("last_name", st_lastName);
+                change.putExtra("middle_name", st_middleName);
+                change.putExtra("unit", st_unit);
+                change.putExtra("subUnit", st_subUnit);
+                change.putExtra("cemetery", st_cemetery);
+                change.putExtra("lat", st_lat);
+                change.putExtra("lon", st_lon);
+                change.putExtra("condition", st_condition);
+                change.putExtra("flag", st_flag);
+                change.putExtra("holder", st_holder);
                 startActivity(change);
+                Toast.makeText(getApplicationContext(), entryID, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -121,9 +137,9 @@ public class VerifiableEntityActivity extends AppCompatActivity {
                                 //Get current data
                                 String conflict = entry.getString("conflict");
                                 String rank = entry.getString("rank");
-                                String firstName = entry.getString("first_name") + " ";
+                                String firstName = entry.getString("first_name");
                                 String lastName = entry.getString("last_name");
-                                String middleName = entry.getString("middle_name") + " ";
+                                String middleName = entry.getString("middle_name");
                                 String unit = entry.getString("unit");
                                 String subUnit = entry.getString("sub_unit");
                                 String cemetery = entry.getString("cemetery");
@@ -133,8 +149,24 @@ public class VerifiableEntityActivity extends AppCompatActivity {
                                 String flagPresent = entry.getString("flag_present");
                                 String holderPresent = entry.getString("holder_present");
 
+                                // Save data in String to be passed to Change Sub Activity if needed
+                                st_conflict = conflict;
+                                st_rank = rank;
+                                st_firstName = firstName;
+                                st_lastName = lastName;
+                                st_middleName = middleName;
+                                st_unit = unit;
+                                st_subUnit = subUnit;
+                                st_cemetery = cemetery;
+                                st_lat = coordArray[1];
+                                st_lon = coordArray[4];
+                                st_condition = condition;
+                                st_flag = flagPresent;
+                                st_holder = holderPresent;
+
+
                                 // Append data if available
-                                entryData.append("Name: " + firstName + middleName + lastName + "\n");
+                                entryData.append("Name: " + firstName + " " + middleName + " " + lastName + "\n");
                                 entryData.append("Cemetery: " + cemetery + "\n");
                                 entryData.append("Conflict: " + conflict + "\n");
                                 if (!rank.matches("")) {
