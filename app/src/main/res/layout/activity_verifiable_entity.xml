@@ -21,7 +21,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:textSize="18sp" />
+        tools:textSize="18sp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="24dp" />
 
     <Button
         android:id="@+id/verify_accurate_button"
@@ -47,5 +49,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/change_submission" />
+        tools:text="@string/change_submission"
+        android:layout_marginRight="112dp"
+        android:layout_marginLeft="113dp" />
 </android.support.constraint.ConstraintLayout>

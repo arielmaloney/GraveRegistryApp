@@ -39,6 +39,8 @@
     <string name="view_past_submissions">View Past Submissions</string>
     <string name="verify_grave" >Verify Grave</string>
     <string name="logout">Logout</string>
+    <string name="birth_year_yyyy">Birth Year (YYYY)</string>
+    <string name="death_year_yyyy">Death Year (YYYY)</string>
     <string-array name ="condition">
         <item>Select Condition</item>
         <item>Good</item>

@@ -11,8 +11,6 @@ public class VerifiableEntry {
     public String name;
     public String cemetery;
     public String conflict;
-    public double latitude;
-    public double longitude;
 
     public VerifiableEntry() {
 
@@ -40,22 +38,6 @@ public class VerifiableEntry {
 
     public void setConflict(String conflict) {
         this.conflict = conflict;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
     }
 
     public String getId() {

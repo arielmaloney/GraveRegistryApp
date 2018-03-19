@@ -24,7 +24,7 @@ public class PastSubsActivity extends AppCompatActivity {
 
     SessionManager session;
 
-    String userId, userFirstName, userLastName, HTTP_URL, num;
+    String userId, userFirstName, userLastName, HTTP_URL;
 
     int counter;
 
@@ -51,7 +51,7 @@ public class PastSubsActivity extends AppCompatActivity {
         displayName = findViewById(R.id.user_displayName);
         pastSubmissionNum = findViewById(R.id.num_past_sub);
         displayName.setText(userFirstName + " " + userLastName);
-        pastSubmissionNum.setText("Number of Past Submissions: ");
+        pastSubmissionNum.setText("Number of Past Submissions: 0");
         entries.setText("");
 
 
@@ -85,6 +85,8 @@ public class PastSubsActivity extends AppCompatActivity {
                                 String firstName = entry.getString("first_name") + " ";
                                 String lastName = entry.getString("last_name");
                                 String middleName = entry.getString("middle_name") + " ";
+                                String birthDate = entry.getString("birth_date");
+                                String deathDate = entry.getString("death_date");
                                 String unit = entry.getString("unit");
                                 String subUnit = entry.getString("sub_unit");
                                 String cemetery = entry.getString("cemetery");
@@ -98,6 +100,12 @@ public class PastSubsActivity extends AppCompatActivity {
                                 // Append data if available
                                 entries.append("Submission " + (i+1) + ":\n");
                                 entries.append("Name: " + firstName + middleName + lastName + "\n");
+                                if (!birthDate.matches("")) {
+                                    entries.append("Birth year: " + birthDate + "\n");
+                                }
+                                if (!deathDate.matches("")) {
+                                    entries.append("Death year: " + deathDate + "\n");
+                                }
                                 entries.append("Cemetery: " + cemetery + "\n");
                                 entries.append("Conflict: " + conflict + "\n");
                                 if (!rank.matches("")) {

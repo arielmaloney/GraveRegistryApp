@@ -40,7 +40,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     private static final String HttpUrl = "http://10.0.2.2/register_grave.php";
 
     // EditText variables to hold Edit Text values
-    EditText et_firstname, et_middlename, et_lastname, et_cemetery, et_conflict, et_rank, et_unit, et_subunit;
+    EditText et_firstname, et_middlename, et_lastname, et_birth, et_death, et_cemetery, et_conflict, et_rank, et_unit, et_subunit;
 
     //TextView variables
     TextView locationText;
@@ -55,7 +55,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     Spinner spinner;
 
     // String variables to hold Edit Text values
-    String st_userID, st_firstname, st_middlename, st_lastname, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
+    String st_userID, st_firstname, st_middlename, st_lastname, st_birth, st_death, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
     String st_coordinates = "";
 
     // Volley Request Queue
@@ -89,6 +89,8 @@ public class GraveRegistryActivity extends AppCompatActivity implements
         et_firstname = findViewById(R.id.et_firstName);
         et_middlename = findViewById(R.id.et_middleName);
         et_lastname = findViewById(R.id.et_lastName);
+        et_birth = findViewById(R.id.et_birthYear);
+        et_death = findViewById(R.id.et_deathYear);
         et_cemetery = findViewById(R.id.et_cemetery);
         et_conflict = findViewById(R.id.et_conflict);
         et_rank = findViewById(R.id.et_rank);
@@ -150,6 +152,8 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                 st_firstname = et_firstname.getText().toString();
                 st_lastname = et_lastname.getText().toString();
                 st_middlename = et_middlename.getText().toString();
+                st_birth = et_birth.getText().toString();
+                st_death = et_death.getText().toString();
                 st_rank = et_rank.getText().toString();
                 st_unit = et_unit.getText().toString();
                 st_subunit = et_subunit.getText().toString();
@@ -182,8 +186,20 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                     Toast.makeText(GraveRegistryActivity.this, "Conflict is required.", Toast.LENGTH_SHORT). show();
                     return;
                 }
+                else if (!st_birth.matches("") && !st_birth.matches("\\d{4}$")) {
+                    Toast.makeText(GraveRegistryActivity.this, "Birth year must be 4 digit number.", Toast.LENGTH_SHORT). show();
+                    return;
+                }
+                else if (!st_death.matches("") && !st_death.matches("\\d{4}$")) {
+                    Toast.makeText(GraveRegistryActivity.this, "Death year must be 4 digit number.", Toast.LENGTH_SHORT). show();
+                    return;
+                }
                 else if (st_coordinates.matches("")) {
                     Toast.makeText(GraveRegistryActivity.this, "Click the 'Get Coordinates' button to save your location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (st_condition.matches("Select Condition")) {
+                    Toast.makeText(GraveRegistryActivity.this, "Please select a condition.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
@@ -262,6 +278,8 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                 params.put("first_name", st_firstname);
                 params.put("last_name", st_lastname);
                 params.put("middle_name", st_middlename);
+                params.put("birth_date", st_birth);
+                params.put("death_date", st_death);
                 params.put("unit", st_unit);
                 params.put("sub_unit", st_subunit);
                 params.put("cemetery", st_cemetery);

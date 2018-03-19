@@ -1,6 +1,8 @@
 package com.example.ariel.graveregistryapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,10 +50,10 @@ public class ChangeSubActivity extends AppCompatActivity implements
     TextView locationText;
 
     // EditText variables to hold Edit Text values
-    EditText et_firstname, et_middlename, et_lastname, et_cemetery, et_conflict, et_rank, et_unit, et_subunit;
+    EditText et_firstname, et_middlename, et_lastname, et_birth, et_death, et_cemetery, et_conflict, et_rank, et_unit, et_subunit;
 
     // String variables to hold Edit Text values
-    String st_userID, st_firstname, st_middlename, st_lastname, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
+    String st_userID, st_firstname, st_middlename, st_lastname, st_birth, st_death, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
     String st_coordinates = "";
 
     // Volley Request Queue
@@ -79,6 +81,8 @@ public class ChangeSubActivity extends AppCompatActivity implements
         String firstName = previousIntent.getStringExtra("first_name");
         String middleName = previousIntent.getStringExtra("middle_name");
         String lastName = previousIntent.getStringExtra("last_name");
+        //String birth = previousIntent.getStringExtra("birth_date");
+        //String death = previousIntent.getStringExtra("death_date");
         String cemetery = previousIntent.getStringExtra("cemetery");
         String conflict = previousIntent.getStringExtra("conflict");
         String rank = previousIntent.getStringExtra("rank");
@@ -108,6 +112,10 @@ public class ChangeSubActivity extends AppCompatActivity implements
         et_middlename.setText(middleName);
         et_lastname = findViewById(R.id.et_lastName);
         et_lastname.setText(lastName);
+        //et_birth.findViewById(R.id.et_birth_year);
+        //et_birth.setText(birth);
+        //et_death.findViewById(R.id.et_death_year);
+        //et_death.setText(death);
         et_cemetery = findViewById(R.id.et_cemetery);
         et_cemetery.setText(cemetery);
         et_conflict = findViewById(R.id.et_conflict);
@@ -188,6 +196,8 @@ public class ChangeSubActivity extends AppCompatActivity implements
                 st_firstname = et_firstname.getText().toString();
                 st_lastname = et_lastname.getText().toString();
                 st_middlename = et_middlename.getText().toString();
+                st_birth = et_birth.getText().toString();
+                st_death = et_death.getText().toString();
                 st_rank = et_rank.getText().toString();
                 st_unit = et_unit.getText().toString();
                 st_subunit = et_subunit.getText().toString();
@@ -220,8 +230,20 @@ public class ChangeSubActivity extends AppCompatActivity implements
                     Toast.makeText(ChangeSubActivity.this, "Conflict is required.", Toast.LENGTH_SHORT). show();
                     return;
                 }
+                else if (!st_birth.matches("") && !st_birth.matches("\\d{4}$")) {
+                    Toast.makeText(ChangeSubActivity.this, "Birth year must be 4 digit number.", Toast.LENGTH_SHORT). show();
+                    return;
+                }
+                else if (!st_death.matches("") && !st_death.matches("\\d{4}$")) {
+                    Toast.makeText(ChangeSubActivity.this, "Death year must be 4 digit number.", Toast.LENGTH_SHORT). show();
+                    return;
+                }
                 else if (st_coordinates.matches("")) {
                     Toast.makeText(ChangeSubActivity.this, "Click the 'Get Coordinates' button to save your location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (st_condition.matches("Select Condition")) {
+                    Toast.makeText(ChangeSubActivity.this, "Please select a condition.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else {
@@ -248,9 +270,29 @@ public class ChangeSubActivity extends AppCompatActivity implements
                         // Showing response message coming from server.
                         Toast.makeText(ChangeSubActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
 
-                        if (ServerResponse.toString().matches("Change Suggestion Successfully Submitted!")) {
-                            Intent intent = new Intent(ChangeSubActivity.this, DashboardActivity.class);
-                            startActivity(intent);
+                        if (ServerResponse.matches("Change Submission Successful!")) {
+
+                            AlertDialog alertDialog = new AlertDialog.Builder(ChangeSubActivity.this).create();
+                            alertDialog.setTitle("Suggest this Change?");
+                            alertDialog.setMessage("Are you sure you want to suggest this change?");
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Showing response message coming from server.
+                                            Toast.makeText(ChangeSubActivity.this, "Change Submission Successful!", Toast.LENGTH_LONG).show();
+                                            Intent dash = new Intent(ChangeSubActivity.this, DashboardActivity.class);
+                                            startActivity(dash);
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+                            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int i) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            alertDialog.show();
                         }
 
                     }
@@ -277,6 +319,8 @@ public class ChangeSubActivity extends AppCompatActivity implements
                 params.put("first_name", st_firstname);
                 params.put("last_name", st_lastname);
                 params.put("middle_name", st_middlename);
+                params.put("birth_date", st_birth);
+                params.put("death_date", st_death);
                 params.put("unit", st_unit);
                 params.put("sub_unit", st_subunit);
                 params.put("cemetery", st_cemetery);
@@ -295,70 +339,6 @@ public class ChangeSubActivity extends AppCompatActivity implements
 
         // Adding the StringRequest object into requestQueue.
         requestQueue.add(stringRequest);
-
-    }
-
-    void populateEditTexts(String id) {
-
-        String HTTP_URL = "http://10.0.2.2/populate_editTexts.php?Marker_ID=" + id;
-
-        // Initialize a new RequestQueue instance
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-        // Initialize a new JsonObjectRequest instance
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                HTTP_URL,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Process the JSON
-                        try{
-
-                            JSONArray array = response.getJSONArray("populateEditTexts");
-
-                            // Get current JSON object
-                            JSONObject entry = array.getJSONObject(0);
-
-                            //Get current data
-                            String conflict = entry.getString("conflict");
-                            String rank = entry.getString("rank");
-                            String firstName = entry.getString("first_name") + " ";
-                            String lastName = entry.getString("last_name");
-                            String middleName = entry.getString("middle_name") + " ";
-                            String unit = entry.getString("unit");
-                            String subUnit = entry.getString("sub_unit");
-                            String cemetery = entry.getString("cemetery");
-                            String coordinates = entry.getString("coordinates");
-                            String[] coordArray = coordinates.split(" ");
-                            String condition = entry.getString("the_condition");
-                            String flagPresent = entry.getString("flag_present");
-                            String holderPresent = entry.getString("holder_present");
-
-                            entryData.put("firstName", firstName);
-                            entryData.put("lastName", lastName);
-
-                            //locationText.setText("Current Coordinates:\nLatitude: " + String.format( "%.2f", coordArray[1]) + "\n" +
-                                        //"Longitude: " + String.format("%.2f", coordArray[4]));
-
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-
-        // Add JsonObjectRequest to the RequestQueue
-        requestQueue.add(jsonObjectRequest);
 
     }
 

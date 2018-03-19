@@ -34,9 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     // String variables to hold EditText values
     String signin_email_string, signin_password_string;
 
-    // Create a progress dialog
-    ProgressDialog progressDialog;
-
     // The url for the login_user php file
     String HttpUrl = "http://10.0.2.2/login_user.php";
 
@@ -57,9 +54,6 @@ public class LoginActivity extends AppCompatActivity {
 
         //Creating the request queue
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
-
-        // Assign Activity this to progress dialog
-        progressDialog = new ProgressDialog(LoginActivity.this);
 
         // A listener that waits for the signInButton to be pressed
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -85,17 +79,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     // Showing progress dialog at user registration time.
-                    progressDialog.setMessage("Please Wait");
-                    progressDialog.show();
 
                     // Creating string request with post method.
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String ServerResponse) {
-
-                                    // Hiding the progress dialog after all task complete.
-                                    progressDialog.dismiss();
 
                                     // Matching server responce message to our text.
                                     if(ServerResponse.matches("Successful Login!")) {
@@ -124,9 +113,6 @@ public class LoginActivity extends AppCompatActivity {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
-
-                                    // Hiding the progress dialog after all task complete.
-                                    progressDialog.dismiss();
 
                                     // Showing error message if something goes wrong.
                                     Toast.makeText(LoginActivity.this, volleyError.toString(), Toast.LENGTH_LONG).show();

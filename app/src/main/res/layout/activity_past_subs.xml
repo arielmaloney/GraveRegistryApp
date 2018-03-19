@@ -20,7 +20,9 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/first_name"
         tools:textAlignment="center"
-        tools:textSize="24sp" />
+        tools:textSize="24sp"
+        android:layout_marginRight="135dp"
+        android:layout_marginLeft="136dp" />
 
     <TextView
         android:id="@+id/num_past_sub"
@@ -34,7 +36,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_displayName"
         tools:text="@string/num_submissions"
-        tools:textAlignment="center" />
+        tools:textAlignment="center"
+        android:layout_marginRight="101dp"
+        android:layout_marginLeft="97dp" />
 
     <ScrollView
         android:id="@+id/scrollView3"
