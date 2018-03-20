@@ -1,14 +1,8 @@
 package com.example.ariel.graveregistryapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,8 +23,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class GraveRegistryActivity extends AppCompatActivity implements
@@ -204,7 +196,25 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                 }
                 else {
 
-                    registerGraveMarker();
+                    AlertDialog alertDialog = new AlertDialog.Builder(GraveRegistryActivity.this).create();
+                    alertDialog.setTitle("Register this grave marker?");
+                    alertDialog.setMessage("Are you sure you want to register this grave marker?");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    registerGraveMarker();
+                                    dialog.dismiss();
+
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
+
 
                 }
             }
@@ -247,12 +257,13 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                     @Override
                     public void onResponse(String ServerResponse) {
 
-                        // Showing response message coming from server.
-                        Toast.makeText(GraveRegistryActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
+                        if (ServerResponse.matches("Grave Registration Successful!")) {
 
-                        if (ServerResponse.toString().matches("Grave Registration Successful!")) {
+                            // Showing response message coming from server.
+                            Toast.makeText(GraveRegistryActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(GraveRegistryActivity.this, DashboardActivity.class);
                             startActivity(intent);
+
                         }
 
                     }

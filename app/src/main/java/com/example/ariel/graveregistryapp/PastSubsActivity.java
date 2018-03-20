@@ -2,7 +2,6 @@ package com.example.ariel.graveregistryapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PastSubsActivity extends AppCompatActivity {
@@ -99,43 +97,43 @@ public class PastSubsActivity extends AppCompatActivity {
 
                                 // Append data if available
                                 entries.append("Submission " + (i+1) + ":\n");
-                                entries.append("Name: " + firstName + middleName + lastName + "\n");
+                                entries.append("   Name: " + firstName + middleName + lastName + "\n");
                                 if (!birthDate.matches("")) {
-                                    entries.append("Birth year: " + birthDate + "\n");
+                                    entries.append("   Birth year: " + birthDate + "\n");
                                 }
                                 if (!deathDate.matches("")) {
-                                    entries.append("Death year: " + deathDate + "\n");
+                                    entries.append("   Death year: " + deathDate + "\n");
                                 }
-                                entries.append("Cemetery: " + cemetery + "\n");
-                                entries.append("Conflict: " + conflict + "\n");
+                                entries.append("   Cemetery: " + cemetery + "\n");
+                                entries.append("   Conflict: " + conflict + "\n");
                                 if (!rank.matches("")) {
-                                    entries.append("Rank: " + rank + "\n");
+                                    entries.append("   Rank: " + rank + "\n");
                                 }
                                 if (!unit.matches("")) {
-                                    entries.append("Unit: " + unit + "\n");
+                                    entries.append("   Unit: " + unit + "\n");
                                 }
                                 if (!subUnit.matches("")) {
-                                    entries.append("Sub Unit: " + subUnit + "\n");
+                                    entries.append("   Sub Unit: " + subUnit + "\n");
                                 }
-                                entries.append("Marker condition: " + condition + "\n");
+                                entries.append("   Marker condition: " + condition + "\n");
                                 if (flagPresent.matches("0")) {
-                                    entries.append("Flag present: No\n");
+                                    entries.append("   Flag present: No\n");
                                 }
                                 else {
-                                    entries.append("Flag present: Yes\n");
+                                    entries.append("   Flag present: Yes\n");
                                 }
                                 if (holderPresent.matches("0")) {
-                                    entries.append("Flag holder present: No\n");
+                                    entries.append("   Flag holder present: No\n");
                                 }
                                 else {
-                                    entries.append("Flag holder present: Yes\n");
+                                    entries.append("   Flag holder present: Yes\n");
                                 }
                                 entries.append(coordArray[0] + " " + coordArray[1] + "\n" + coordArray[3] + " " + coordArray[4] + "\n");
                                 if (isVerified.matches("0")) {
-                                    entries.append("Verified: No\n");
+                                    entries.append("   Verified: No\n");
                                 }
                                 else {
-                                    entries.append("Verified: Yes\n");
+                                    entries.append("   Verified: Yes\n");
                                 }
                                 entries.append("\n\n");
 

@@ -19,13 +19,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,8 +76,8 @@ public class ChangeSubActivity extends AppCompatActivity implements
         String firstName = previousIntent.getStringExtra("first_name");
         String middleName = previousIntent.getStringExtra("middle_name");
         String lastName = previousIntent.getStringExtra("last_name");
-        //String birth = previousIntent.getStringExtra("birth_date");
-        //String death = previousIntent.getStringExtra("death_date");
+        String birth = previousIntent.getStringExtra("birth_date");
+        String death = previousIntent.getStringExtra("death_date");
         String cemetery = previousIntent.getStringExtra("cemetery");
         String conflict = previousIntent.getStringExtra("conflict");
         String rank = previousIntent.getStringExtra("rank");
@@ -112,10 +107,10 @@ public class ChangeSubActivity extends AppCompatActivity implements
         et_middlename.setText(middleName);
         et_lastname = findViewById(R.id.et_lastName);
         et_lastname.setText(lastName);
-        //et_birth.findViewById(R.id.et_birth_year);
-        //et_birth.setText(birth);
-        //et_death.findViewById(R.id.et_death_year);
-        //et_death.setText(death);
+        et_birth = findViewById(R.id.et_birth_year);
+        et_birth.setText(birth);
+        et_death = findViewById(R.id.et_death_year);
+        et_death.setText(death);
         et_cemetery = findViewById(R.id.et_cemetery);
         et_cemetery.setText(cemetery);
         et_conflict = findViewById(R.id.et_conflict);
@@ -248,7 +243,27 @@ public class ChangeSubActivity extends AppCompatActivity implements
                 }
                 else {
 
-                    suggestChange(originalID);
+                    AlertDialog alertDialog = new AlertDialog.Builder(ChangeSubActivity.this).create();
+                    alertDialog.setTitle("Suggest this Change?");
+                    alertDialog.setMessage("Are you sure you want to suggest this change?");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    suggestChange(originalID);
+                                    Intent dash = new Intent(ChangeSubActivity.this, DashboardActivity.class);
+                                    startActivity(dash);
+                                    dialog.dismiss();
+
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
 
                 }
             }
@@ -267,32 +282,10 @@ public class ChangeSubActivity extends AppCompatActivity implements
                     @Override
                     public void onResponse(String ServerResponse) {
 
-                        // Showing response message coming from server.
-                        Toast.makeText(ChangeSubActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
-
                         if (ServerResponse.matches("Change Submission Successful!")) {
 
-                            AlertDialog alertDialog = new AlertDialog.Builder(ChangeSubActivity.this).create();
-                            alertDialog.setTitle("Suggest this Change?");
-                            alertDialog.setMessage("Are you sure you want to suggest this change?");
-                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            // Showing response message coming from server.
-                                            Toast.makeText(ChangeSubActivity.this, "Change Submission Successful!", Toast.LENGTH_LONG).show();
-                                            Intent dash = new Intent(ChangeSubActivity.this, DashboardActivity.class);
-                                            startActivity(dash);
-                                            dialog.dismiss();
-
-                                        }
-                                    });
-                            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int i) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            alertDialog.show();
+                            // Showing response message coming from server.
+                            Toast.makeText(ChangeSubActivity.this, "Change Submission Successful!", Toast.LENGTH_LONG).show();
                         }
 
                     }

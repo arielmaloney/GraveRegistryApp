@@ -93,8 +93,8 @@ public class VerifiableEntityActivity extends AppCompatActivity {
                 change.putExtra("first_name", st_firstName);
                 change.putExtra("last_name", st_lastName);
                 change.putExtra("middle_name", st_middleName);
-                //change.putExtra("birth_date", st_birth);
-                //change.putExtra("death_date", st_death);
+                change.putExtra("birth_date", st_birth);
+                change.putExtra("death_date", st_death);
                 change.putExtra("unit", st_unit);
                 change.putExtra("subUnit", st_subUnit);
                 change.putExtra("cemetery", st_cemetery);

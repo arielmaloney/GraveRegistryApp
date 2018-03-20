@@ -1,6 +1,5 @@
 package com.example.ariel.graveregistryapp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,9 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     String register_firstName_string, register_lastName_string, register_email_string,
         register_password_string, register_confirmpass_string;
 
-    // Progress Dialog
-    private ProgressDialog progressDialog;
-
     //Creating Volley RequestQueue
     RequestQueue requestQueue;
 
@@ -56,8 +52,6 @@ public class RegisterActivity extends AppCompatActivity {
         // Creating Volley newRequestQueue
         requestQueue = Volley.newRequestQueue(RegisterActivity.this);
 
-        // Creating the ProgressDialog
-        progressDialog = new ProgressDialog(RegisterActivity.this);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -85,8 +79,6 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
                 else {
-                    progressDialog.setMessage("Please Wait, we are creating a new user account.");
-                    progressDialog.show();
 
                     // Creating string request with post method.
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
@@ -94,13 +86,10 @@ public class RegisterActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String ServerResponse) {
 
-                                    // Hiding the progress dialog after all task complete.
-                                    progressDialog.dismiss();
-
                                     // Showing response message coming from server.
                                     Toast.makeText(RegisterActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
 
-                                    if (ServerResponse.toString().matches("Successful Registration!")) {
+                                    if (ServerResponse.matches("Successful Registration!")) {
                                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                         startActivity(intent);
                                     }
@@ -110,9 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
-
-                                    // Hiding the progress dialog after all task complete.
-                                    progressDialog.dismiss();
 
                                     // Showing error message if something goes wrong.
                                     Toast.makeText(RegisterActivity.this, volleyError.toString(), Toast.LENGTH_LONG).show();

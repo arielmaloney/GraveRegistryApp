@@ -1,7 +1,6 @@
 package com.example.ariel.graveregistryapp;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;

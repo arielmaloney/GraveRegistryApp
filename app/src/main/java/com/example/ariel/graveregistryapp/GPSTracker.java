@@ -1,8 +1,8 @@
 package com.example.ariel.graveregistryapp;
 
-/**
- *  GPS Tracker class to provide coordinates for grave markers
- * Created by Ariel on 3/15/2018.
+/*
+   GPS Tracker class to provide coordinates for grave markers
+  Created by Ariel on 3/15/2018.
  */
 import android.app.AlertDialog;
 import android.app.Service;

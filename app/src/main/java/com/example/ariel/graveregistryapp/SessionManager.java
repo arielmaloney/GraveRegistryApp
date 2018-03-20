@@ -1,7 +1,6 @@
 package com.example.ariel.graveregistryapp;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import android.content.Context;
 import android.content.Intent;
