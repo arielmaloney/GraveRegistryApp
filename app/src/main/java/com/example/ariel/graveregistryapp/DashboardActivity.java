@@ -20,13 +20,11 @@ public class DashboardActivity extends AppCompatActivity {
 
 
         session = new SessionManager(getApplicationContext());
-        session.checkLogin();
         HashMap<String, String> userDetails = session.getUserDetails();
         String fn = userDetails.get(SessionManager.KEY_FIRSTNAME);
         String ln = userDetails.get(SessionManager.KEY_LASTNAME);
 
         // Sets the TextView to the users first and last name
-        TextView welcomeMsg = findViewById(R.id.tvWelcomeMessage);
         TextView displayName = findViewById(R.id.firstnameTxt);
         displayName.setText(fn + " " + ln);
 
