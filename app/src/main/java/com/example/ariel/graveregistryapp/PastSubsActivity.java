@@ -128,7 +128,7 @@ public class PastSubsActivity extends AppCompatActivity {
                                 else {
                                     entries.append("   Flag holder present: Yes\n");
                                 }
-                                entries.append(coordArray[0] + " " + coordArray[1] + "\n" + coordArray[3] + " " + coordArray[4] + "\n");
+                                entries.append("   " + coordArray[0] + " " + coordArray[1] + "\n   " + coordArray[3] + " " + coordArray[4] + "\n");
                                 if (isVerified.matches("0")) {
                                     entries.append("   Verified: No\n");
                                 }
