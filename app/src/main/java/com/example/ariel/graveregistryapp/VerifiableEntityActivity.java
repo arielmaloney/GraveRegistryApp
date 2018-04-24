@@ -25,45 +25,62 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Verifiable Entity Activity
+ */
 public class VerifiableEntityActivity extends AppCompatActivity {
 
+    // The text view for the entry data
     TextView entryData;
 
+    // Buttons for verify as Accurate and suggest a change
     Button verifyAccurate, suggestChange;
 
+    // original entry ID
     String entryID;
 
+    // String variables for data
     String st_conflict, st_rank, st_firstName, st_middleName, st_lastName, st_birth, st_death, st_unit, st_subUnit, st_lat, st_lon, st_cemetery, st_condition, st_flag, st_holder;
 
+    /**
+     * The onCreate method for the Verifiable Entity Activity
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verifiable_entity);
 
+        // Retrieve the previous intent extra and set original entry ID
         Intent intent = getIntent();
         entryID = intent.getStringExtra("entryID");
 
+        // Set the entryData TextView
         entryData = findViewById(R.id.verifiable_entity_data);
-
         entryData.setText("");
 
+        // Populate the TextView with the data from the database
         getEntryData(entryID);
 
-        // Getting buttons from view
+        // Setting buttons from view
         verifyAccurate = findViewById(R.id.verify_accurate_button);
         suggestChange = findViewById(R.id.suggest_change_button);
 
+        // Set an OnClickListener to wait for the verify as accurate button to be pushed
         verifyAccurate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                // Display dialog box for user to decide if they are sure they want to verify as accurate
                 AlertDialog alertDialog = new AlertDialog.Builder(VerifiableEntityActivity.this).create();
                 alertDialog.setTitle("Verify as Accurate?");
                 alertDialog.setMessage("Are you sure you want to verify this submission as accurate?");
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                // verifies the marker as accurate in the database
                                 verifyMarker(entryID);
+                                // take User back to the Dashboard
                                 Intent dash = new Intent(VerifiableEntityActivity.this, DashboardActivity.class);
                                 startActivity(dash);
                                 dialog.dismiss();
@@ -83,9 +100,11 @@ public class VerifiableEntityActivity extends AppCompatActivity {
             }
         });
 
+        // Set an OnClickListener to wait for the suggest a change button to be pushed
         suggestChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Pass the entry information to the next activity
                 Intent change = new Intent(VerifiableEntityActivity.this, ChangeSubActivity.class);
                 change.putExtra("entryId", entryID);
                 change.putExtra("conflict", st_conflict);
@@ -110,6 +129,10 @@ public class VerifiableEntityActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * A method to populate grave marker data for the User to review
+     * @param id grave marker id
+     */
     void getEntryData(String id) {
 
         String HTTP_URL = "http://10.0.2.2/get_grave_entry.php?Marker_ID=" + id;
@@ -217,7 +240,7 @@ public class VerifiableEntityActivity extends AppCompatActivity {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
+                        // Display Toast when error occurs
                         Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -229,6 +252,10 @@ public class VerifiableEntityActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Verifies the marker in the database
+     * @param id the grave marker id
+     */
     public void verifyMarker(String id) {
 
         String HttpUrl = "http://10.0.2.2/verify_accurate.php?Marker_ID=" + id;
@@ -238,7 +265,7 @@ public class VerifiableEntityActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String ServerResponse) {
 
-                        // Showing response message coming from server.
+                        // Show response message coming from server
                         Toast.makeText(VerifiableEntityActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
 
                     }
@@ -247,17 +274,17 @@ public class VerifiableEntityActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
 
-                        // Showing error message if something goes wrong.
+                        // Show error message if something goes wrong
                         Toast.makeText(VerifiableEntityActivity.this, volleyError.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() {
 
-                // Creating Map String Params.
+                // Creating Map String Params
                 Map<String, String> params = new HashMap<>();
 
-                // Adding All values to Params.
+                // Adding values to Params
                 params.put("Marker_ID", entryID);
                 params.put("is_verified", "1");
                 return params;
@@ -265,10 +292,10 @@ public class VerifiableEntityActivity extends AppCompatActivity {
 
         };
 
-        // Creating RequestQueue.
+        // Creating RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(VerifiableEntityActivity.this);
 
-        // Adding the StringRequest object into requestQueue.
+        // Adding the StringRequest object into requestQueue
         requestQueue.add(stringRequest);
     }
 

@@ -37,30 +37,29 @@ public class SessionManager {
     // Shared pref mode
     int PRIVATE_MODE = 0;
 
-    // Sharedpref file name
+    // Shared Preference file name
     private static final String PREF_NAME = "UserPref";
 
     // All Shared Preferences Keys
     private static final String IS_LOGIN = "IsLoggedIn";
 
-    // User first name (make variable public to access from outside)
+    // User first name
     public static final String KEY_FIRSTNAME = "first_name";
 
-    // Email address (make variable public to access from outside)
+    // Email address
     public static final String KEY_LASTNAME = "last_name";
 
     // User id
     public static final String KEY_USERID = "user_id";
 
-    // Email address (make variable public to access from outside)
+    // Email address
     public static final String KEY_EMAIL = "email";
 
-    public String firstname = "";
-    public String lastname = "";
-    public String useremail = "";
-    public String userid = "";
 
-    // Constructor
+    /**
+     * SessionManager constructor
+     * @param context the context
+     */
     public SessionManager(Context context){
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
@@ -69,17 +68,17 @@ public class SessionManager {
 
     /**
      * Create login session
+     * @param email the user email from login
      * */
     public void createLoginSession(String email){
 
-        useremail = email;
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);
 
-        //populates all other user info
+        // URL used to populate all other user info from database
         String HTTP_URL = "http://10.0.2.2/select_user.php?email=" + email;
 
         // Initialize a new RequestQueue instance
@@ -123,15 +122,13 @@ public class SessionManager {
         editor.commit();
     }
 
-        /**
-     * Check login method wil check user login status
-     * If false it will redirect user to login page
-     * Else won't do anything
+    /**
+     * Check login method will check user login status
      * */
     public void checkLogin(){
         // Check login status
         if(!this.isLoggedIn()){
-            // user is not logged in redirect him to Login Activity
+            // user is not logged in redirect User to Login Activity
             Intent i = new Intent(_context, LoginActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -145,13 +142,12 @@ public class SessionManager {
 
     }
 
-
-
     /**
      * Get stored session data
+     * @return a HashMap of user data
      * */
     public HashMap<String, String> getUserDetails(){
-        HashMap<String, String> user = new HashMap<String, String>();
+        HashMap<String, String> user = new HashMap<>();
         // user first name
         user.put(KEY_FIRSTNAME, pref.getString(KEY_FIRSTNAME, null));
 
@@ -190,9 +186,8 @@ public class SessionManager {
     }
 
     /**
-     * Quick check for login
+     * Check for login status
      * **/
-    // Get Login State
     public boolean isLoggedIn(){
         return pref.getBoolean(IS_LOGIN, false);
     }

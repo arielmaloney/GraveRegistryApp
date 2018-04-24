@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    // SessionManager object
     SessionManager session;
 
     @Override
@@ -18,7 +19,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-
+        //Create the SessionManager and get the current User details
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> userDetails = session.getUserDetails();
         String fn = userDetails.get(SessionManager.KEY_FIRSTNAME);
@@ -28,6 +29,7 @@ public class DashboardActivity extends AppCompatActivity {
         TextView displayName = findViewById(R.id.firstnameTxt);
         displayName.setText(fn + " " + ln);
 
+        // Sets button objects
         final Button graveRegButton = findViewById(R.id.graveRegButton);
         final Button verifyGraveButton = findViewById(R.id.verifyGraveButton);
         final Button pastSubsButton = findViewById(R.id.viewPastSubButton);
@@ -64,7 +66,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         });
 
-        //Sets a OnClickListener to wait for the Logout Button to be clicked and navigate the User
+        //Sets a OnClickListener to wait for the Logout Button to be clicked and navigate the User and clear session data
         logoutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // On Logout button click will Logout User and transfer back to Login page

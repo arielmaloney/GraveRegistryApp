@@ -18,6 +18,9 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Login Activity
+ */
 public class LoginActivity extends AppCompatActivity {
 
     // Edit Text variables
@@ -33,19 +36,24 @@ public class LoginActivity extends AppCompatActivity {
     String signin_email_string, signin_password_string;
 
     // The url for the login_user php file
-    String HttpUrl = "http://10.0.2.2/login_user.php";
+    final String HttpUrl = "http://10.0.2.2/login_user.php";
 
     // Session Manager
     SessionManager session;
 
+    /**
+     * The onCreate method for the Login Activity
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Create the SessionManager
         session = new SessionManager(getApplicationContext());
 
-        // Retrieves the values from the EditText fields
+        // Sets EditText objects
         signin_email = findViewById(R.id.et_email_signin);
         signin_password = findViewById(R.id.et_password_signin);
         signInButton = findViewById(R.id.sign_in_button);
@@ -53,54 +61,50 @@ public class LoginActivity extends AppCompatActivity {
         //Creating the request queue
         requestQueue = Volley.newRequestQueue(LoginActivity.this);
 
-        // A listener that waits for the signInButton to be pressed
+        // A listener that waits for the signInButton to be pressed and sign the user in
         signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
 
                 //Creates string objects of the email and password entered
                 signin_email_string = signin_email.getText().toString();
                 signin_password_string = signin_password.getText().toString();
 
-                // If fields are left empty than send error message to User
+                // Error handling for required fields
                 if (signin_email_string.matches("")) {
                     Toast.makeText(LoginActivity.this, "Email is required.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else if (signin_password_string.matches("")) {
                     Toast.makeText(LoginActivity.this, "Password is required.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else if (!isEmailValid(signin_email_string)) {
                     Toast.makeText(LoginActivity.this, "Not a valid email address.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else {
-                    // Showing progress dialog at user registration time.
 
-                    // Creating string request with post method.
+                    // Creating string request with post method
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String ServerResponse) {
 
-                                    // Matching server responce message to our text.
+                                    // Matching server response message to our text.
                                     if(ServerResponse.matches("Successful Login!")) {
 
-                                        // If response matched then show the toast.
+                                        // If response matched then show the toast
                                         Toast.makeText(LoginActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
 
+                                        // Store User data in the session using the email
                                         session.createLoginSession(signin_email_string);
 
-                                        // Opening the user profile activity using intent.
+                                        // Opening the user profile activity using intent
                                         Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                                         startActivity(intent);
-                                        // Finish the current Login activity.
+                                        // Finish the current Login activity
                                         finish();
                                     }
                                     else {
 
-                                        // Showing Echo Response Message Coming From Server.
+                                        // Showing Echo Response Message Coming From Server
                                         Toast.makeText(LoginActivity.this, ServerResponse, Toast.LENGTH_LONG).show();
 
                                     }
@@ -112,14 +116,14 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onErrorResponse(VolleyError volleyError) {
 
-                                    // Showing error message if something goes wrong.
+                                    // Showing error message if something goes wrong
                                     Toast.makeText(LoginActivity.this, volleyError.toString(), Toast.LENGTH_LONG).show();
                                 }
                             }) {
                         @Override
                         protected Map<String, String> getParams() {
 
-                            // Creating Map String Params.
+                            // Creating Map String Params
                             Map<String, String> params = new HashMap<>();
 
                             // Adding All values to Params.
@@ -132,10 +136,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     };
 
-                    // Creating RequestQueue.
+                    // Creating RequestQueue using Volley
                     RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
 
-                    // Adding the StringRequest object into requestQueue.
+                    // Adding the StringRequest object into requestQueue
                     requestQueue.add(stringRequest);
                 }
 
@@ -143,15 +147,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // Sends the User to the Register Activity when the TextView is clicked
-    // android:onClick="goToRegister" is placed in the xml for the TextView
+    /**
+     * Sends the User to the Register Activity when the TextView is clicked
+     * android:onClick="goToRegister" is placed in the xml for the TextView
+     * @param view the view
+     */
     public void goToRegister(View view)
     {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
     }
 
-    //Determines if email address is valid
+    /**
+     * Method to determine if email address is valid format
+     * @param email the entered email
+     * @return boolean
+     */
     boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }

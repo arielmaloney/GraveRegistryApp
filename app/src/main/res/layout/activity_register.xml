@@ -33,7 +33,9 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/et_lastname_reg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginRight="84dp"
+        android:layout_marginLeft="85dp" />
 
     <EditText
         android:id="@+id/et_lastname_reg"
@@ -46,7 +48,9 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/et_email_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginRight="84dp"
+        android:layout_marginLeft="85dp" />
 
     <EditText
         android:id="@+id/et_email_register"
@@ -59,7 +63,9 @@
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/et_reg_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginRight="84dp"
+        android:layout_marginLeft="85dp" />
 
     <EditText
         android:id="@+id/et_reg_password"
@@ -72,7 +78,9 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/et_confrimPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginRight="84dp"
+        android:layout_marginLeft="85dp" />
 
     <EditText
         android:id="@+id/et_confrimPassword"
@@ -85,7 +93,9 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/register_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginRight="84dp"
+        android:layout_marginLeft="85dp" />
 
     <TextView
         android:id="@+id/tv_haveaccount"

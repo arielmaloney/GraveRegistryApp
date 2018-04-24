@@ -25,6 +25,9 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Grave Registry Activity
+ */
 public class GraveRegistryActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener{
 
@@ -37,13 +40,13 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     //TextView variables
     TextView locationText;
 
-    // Checkbox
+    // Checkbox variables
     CheckBox cb_flag_pres, cb_bronze;
 
-    // Submit Button field
+    // Submit Button and Coordinates Button fields
     Button submitButton, coordinatesButton;
 
-    // Spinner field
+    // Spinner object
     Spinner spinner;
 
     // String variables to hold Edit Text values
@@ -59,25 +62,29 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     // GPS Tracker
     GPSTracker gps;
 
+    /**
+     * The onCreate method for the Grave Registry Activity
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grave_registry);
 
+        // Create the SessionManager and get User details
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> userDetails = session.getUserDetails();
         st_userID = userDetails.get(SessionManager.KEY_USERID);
 
-        // Create button
+        // Set buttons
         submitButton = findViewById(R.id.submit_button);
         coordinatesButton = findViewById(R.id.coordinates_button);
 
         // Getting locationText TextView
         locationText = findViewById(R.id.locationText);
 
-
-        // Getting EditTexts objects
+        // Setting EditTexts objects
         et_firstname = findViewById(R.id.et_firstName);
         et_middlename = findViewById(R.id.et_middleName);
         et_lastname = findViewById(R.id.et_lastName);
@@ -89,15 +96,15 @@ public class GraveRegistryActivity extends AppCompatActivity implements
         et_unit = findViewById(R.id.et_unit);
         et_subunit = findViewById(R.id.et_subUnit);
 
-        // Gets checkbox objects
+        // Setting checkbox objects
         cb_bronze = findViewById(R.id.cb_bronzeHolder);
         cb_flag_pres = findViewById(R.id.cb_flag);
 
-        //This will populate the drop down items for the condition of the grave
+        //Populate the drop down items for the condition of the grave
         //spinner_condition is the name of the ID in the activity_grave_registry.xml
         spinner = findViewById(R.id.spinner_condition);
 
-        //This creates a custom adapter (fills our spinner with text) from the array we made in
+        //Creates a custom adapter (fills the spinner with text) from the array made in
         // strings.xml, labeled "condition"
         //simple_spinner_item is a custom layout given by android
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -105,19 +112,18 @@ public class GraveRegistryActivity extends AppCompatActivity implements
             R.array.condition,
             android.R.layout.simple_spinner_item);
 
-        //This sets the layout for the drop down item
+        //Sets the layout for the drop down item
         //simple_spinner_dropdown_item is a custom layout given by android
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         //Assigns the custom adapter to our spinner item
-        //Now our spinner can view our items in the drop down
+        //The spinner can view the items in the drop down
         spinner.setAdapter(adapter);
 
-        //This allows our spinner to listen for the selected items from the drop down
+        //Allows the spinner to listen for the selected items from the drop down
         spinner.setOnItemSelectedListener(this);
 
-
-        //Sets a OnClickListener to wait for the Get Coordinates Button to be clicked and populate the latitude and longitutde
+        //Sets a OnClickListener to wait for the Get Coordinates Button to be clicked and populate the latitude and longitude
         coordinatesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -138,7 +144,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
         submitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                // Create String objects from EditTexts
+                // Create Strings from EditTexts
                 st_cemetery = et_cemetery.getText().toString();
                 st_conflict = et_conflict.getText().toString();
                 st_firstname = et_firstname.getText().toString();
@@ -151,7 +157,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                 st_subunit = et_subunit.getText().toString();
                 st_condition = spinner.getSelectedItem().toString();
 
-                // Get checkbox objects
+                // Get checkbox values
                 if (cb_flag_pres.isChecked()) {
                     has_flag = "1";
                 }
@@ -165,37 +171,30 @@ public class GraveRegistryActivity extends AppCompatActivity implements
                     has_holder = "0";
                 }
 
-
+                // Error handling for required fields and properly formatted birth and death year
                 if (st_lastname.matches("")) {
                     Toast.makeText(GraveRegistryActivity.this, "Last name is required.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (st_cemetery.matches("")) {
                     Toast.makeText(GraveRegistryActivity.this, "Cemetery is required.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (st_conflict.matches("")) {
                     Toast.makeText(GraveRegistryActivity.this, "Conflict is required.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (!st_birth.matches("") && !st_birth.matches("\\d{4}$")) {
                     Toast.makeText(GraveRegistryActivity.this, "Birth year must be 4 digit number.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (!st_death.matches("") && !st_death.matches("\\d{4}$")) {
                     Toast.makeText(GraveRegistryActivity.this, "Death year must be 4 digit number.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (st_coordinates.matches("")) {
                     Toast.makeText(GraveRegistryActivity.this, "Click the 'Get Coordinates' button to save your location", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else if (st_condition.matches("Select Condition")) {
                     Toast.makeText(GraveRegistryActivity.this, "Please select a condition.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else {
-
+                    // Display dialog box to ask User if they want to register the grave marker
                     AlertDialog alertDialog = new AlertDialog.Builder(GraveRegistryActivity.this).create();
                     alertDialog.setTitle("Register this grave marker?");
                     alertDialog.setMessage("Are you sure you want to register this grave marker?");
@@ -248,7 +247,9 @@ public class GraveRegistryActivity extends AppCompatActivity implements
     }
 
 
-    // Will register the grave marker
+    /**
+     * Create the String request to register the grave marker in the database
+     */
     public void registerGraveMarker() {
 
         // Creating string request with post method.
@@ -304,7 +305,7 @@ public class GraveRegistryActivity extends AppCompatActivity implements
 
         };
 
-        // Creating RequestQueue.
+        // Creating RequestQueue using Volley
         requestQueue = Volley.newRequestQueue(GraveRegistryActivity.this);
 
         // Adding the StringRequest object into requestQueue.

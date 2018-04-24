@@ -46,7 +46,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_noaccount"
-        tools:text="Sign Up Now" />
+        tools:text="Sign Up Now"
+        android:layout_marginRight="152dp"
+        android:layout_marginLeft="154dp" />
 
     <EditText
         android:id="@+id/et_email_signin"

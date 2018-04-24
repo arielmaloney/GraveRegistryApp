@@ -2,7 +2,7 @@ package com.example.ariel.graveregistryapp;
 
 /*
    GPS Tracker class to provide coordinates for grave markers
-  Created by Ariel on 3/15/2018.
+   Created by Ariel on 3/15/2018.
  */
 import android.app.AlertDialog;
 import android.app.Service;
@@ -17,8 +17,12 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+/**
+ * The GPSTracker class that provides coordinates for the Users last known location
+ */
 public class GPSTracker extends Service implements LocationListener {
 
+    // The context
     private final Context mContext;
 
     // flag for GPS status
@@ -30,6 +34,7 @@ public class GPSTracker extends Service implements LocationListener {
     // flag for GPS status
     boolean canGetLocation = false;
 
+    // Location and lat/lon variables
     Location location; // location
     double latitude; // latitude
     double longitude; // longitude
@@ -38,16 +43,24 @@ public class GPSTracker extends Service implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
 
     // The minimum time between updates in milliseconds
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60; // 1 minute
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
+    /**
+     * Constructor with context parameter
+     * @param context the context
+     */
     public GPSTracker(Context context) {
         this.mContext = context;
         getLocation();
     }
 
+    /**
+     * The getLocation method for the GPSTracker
+     * @return the location
+     */
     public Location getLocation() {
         try {
             locationManager = (LocationManager) mContext
@@ -128,18 +141,10 @@ public class GPSTracker extends Service implements LocationListener {
         return location;
     }
 
-    /**
-     * Stop using GPS listener
-     * Calling this function will stop using GPS in your app
-     * */
-    public void stopUsingGPS(){
-        if(locationManager != null){
-            locationManager.removeUpdates(GPSTracker.this);
-        }
-    }
 
     /**
-     * Function to get latitude
+     * Method to get latitude
+     * @return the latitude
      * */
     public double getLatitude(){
         if(location != null){
@@ -151,7 +156,8 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     /**
-     * Function to get longitude
+     * Method to get longitude
+     * @return the longitude
      * */
     public double getLongitude(){
         if(location != null){
@@ -163,7 +169,7 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     /**
-     * Function to check GPS/wifi enabled
+     * Method to check GPS/wifi enabled
      * @return boolean
      * */
     public boolean canGetLocation() {
@@ -171,8 +177,8 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     /**
-     * Function to show settings alert dialog
-     * On pressing Settings button will lauch Settings Options
+     * Method to show settings alert dialog
+     * On pressing Settings button will launch Settings Options
      * */
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);

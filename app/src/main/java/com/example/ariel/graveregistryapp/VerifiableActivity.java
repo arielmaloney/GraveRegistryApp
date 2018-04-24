@@ -22,16 +22,26 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Verifiable Activity
+ */
 public class VerifiableActivity extends AppCompatActivity {
 
+    // Create variables for the list and list objects
     public ListView list;
     public ArrayList<VerifiableEntry> entries = new ArrayList<>();
     public VerifiableListAdapter adapter;
 
+    // SessionManager object
     public SessionManager session;
 
+    // String for userID
     public String userID;
 
+    /**
+     * The onCreate method for the Verifiable Activity
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +52,15 @@ public class VerifiableActivity extends AppCompatActivity {
         HashMap<String, String> user = session.getUserDetails();
         userID = user.get(SessionManager.KEY_USERID);
 
+        // Get Verifiable entries and add them to the entries ArrayList
         getData(userID);
 
-
-        // Creating the list and list adapter
+        // Setting the list and list adapter
         list = findViewById(R.id.listViewVerify);
         adapter = new VerifiableListAdapter(this);
         list.setAdapter(adapter);
 
+        // Create an onClickListener for when an entry is chosen from the list
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -63,8 +74,14 @@ public class VerifiableActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * A method that gets grave marker data that can be verified (entries the current user did NOT submit
+     * and have not already been verified)
+     * @param user the current user
+     */
     public void getData(String user) {
 
+        // The URL for getting verifiable entries
         String HTTP_URL = "http://10.0.2.2/get_verifiable.php?user=" + user;
 
         // Initialize a new RequestQueue instance
@@ -88,6 +105,7 @@ public class VerifiableActivity extends AppCompatActivity {
                                 // Get current JSON object
                                 JSONObject entry = array.getJSONObject(i);
 
+                                // Create a new verifiable entry
                                 VerifiableEntry ve = new VerifiableEntry();
 
                                 //Get current data
@@ -100,17 +118,16 @@ public class VerifiableActivity extends AppCompatActivity {
                                 String coordinates = entry.getString("coordinates");
                                 String[] coordArray = coordinates.split(" ");
 
+                                // Set data
                                 ve.setId(id);
                                 ve.setName(firstName + middleName + lastName);
                                 ve.setCemetery(cemetery);
                                 ve.setConflict(conflict);
 
+                                // Add entry to to entries
                                 entries.add(ve);
 
-
-
                             }
-
                             adapter.notifyDataSetChanged();
 
                         }catch (JSONException e){
@@ -122,7 +139,7 @@ public class VerifiableActivity extends AppCompatActivity {
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error){
-                        // Do something when error occurred
+                        // Display toast when error occurred
                         Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }

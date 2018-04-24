@@ -18,31 +18,37 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+/**
+ * The PastSubs Activity
+ */
 public class PastSubsActivity extends AppCompatActivity {
 
+    // SessionManager object
     SessionManager session;
 
+    // String variables
     String userId, userFirstName, userLastName, HTTP_URL;
 
-    int counter;
-
+    // TextView variables
     TextView entries, displayName, pastSubmissionNum;
 
+    /**
+     * The onCreate method for the PastSubsActivity
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_subs);
 
-        // Creating a new SessionManager object
+        // Creating the SessionManager object and getting User details
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> userDetails = session.getUserDetails();
 
-        //Getting the session UserID
+        //Getting the UserID, first name, and last name
         userId = userDetails.get(SessionManager.KEY_USERID);
         userFirstName = userDetails.get(SessionManager.KEY_FIRSTNAME);
         userLastName = userDetails.get(SessionManager.KEY_LASTNAME);
-
-        counter = 0;
 
         // Setting the text views
         entries = findViewById(R.id.entries);
@@ -53,7 +59,7 @@ public class PastSubsActivity extends AppCompatActivity {
         entries.setText("");
 
 
-        // Sending the UserID to the PHP file
+        // Setting the UserID for the PHP file
         HTTP_URL = "http://10.0.2.2/get_past_submissions.php?user=" + userId;
 
         // Initialize a new RequestQueue instance
@@ -137,7 +143,6 @@ public class PastSubsActivity extends AppCompatActivity {
                                 }
                                 entries.append("\n\n");
 
-                                ++counter;
                                 pastSubmissionNum.setText("Number of Past Submissions: " + array.length());
 
                             }

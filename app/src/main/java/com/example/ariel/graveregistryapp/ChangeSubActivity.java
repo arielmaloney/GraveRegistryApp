@@ -25,30 +25,36 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A class for the Change a Submission screen.
+ */
+
 public class ChangeSubActivity extends AppCompatActivity implements
         AdapterView.OnItemSelectedListener{
 
+    // Strings for the original marker ID and the current user ID
     String originalID, userID;
 
+    // A SessionManager object to get current User attributes
     SessionManager session;
 
-    // Checkbox
+    // Checkbox objects
     CheckBox cb_flag_pres, cb_bronze;
 
-    // Submit Button field
+    // Submit Button and Coordinates Button
     Button submitButton, coordinatesButton;
 
-    // Spinner field
+    // Spinner object
     Spinner spinner;
 
-    //TextView variables
+    //TextView for the display of the location
     TextView locationText;
 
     // EditText variables to hold Edit Text values
     EditText et_firstname, et_middlename, et_lastname, et_birth, et_death, et_cemetery, et_conflict, et_rank, et_unit, et_subunit;
 
     // String variables to hold Edit Text values
-    String st_userID, st_firstname, st_middlename, st_lastname, st_birth, st_death, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
+    String st_firstname, st_middlename, st_lastname, st_birth, st_death, st_cemetery, st_conflict, st_rank, st_unit, st_subunit, has_flag, has_holder, st_condition;
     String st_coordinates = "";
 
     // Volley Request Queue
@@ -57,20 +63,21 @@ public class ChangeSubActivity extends AppCompatActivity implements
     // GPS Tracker
     GPSTracker gps;
 
-    // Hashmap of populated inputs
-    HashMap<String, String> entryData = new HashMap<>();
-
+    /**
+     * The onCreate method for this Activity
+     * @param savedInstanceState the saved instance of the state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_sub);
 
-        //Creates a new session
+        //Creaes the SessionManager object and retrieves the current Users details
         session = new SessionManager(getApplicationContext());
         HashMap<String, String> user = session.getUserDetails();
         userID = user.get(SessionManager.KEY_USERID);
 
-        // Gets original Marker id from past activity
+        // Populate EditText with submission details from previous activity
         Intent previousIntent = getIntent();
         originalID = previousIntent.getStringExtra("entryId");
         String firstName = previousIntent.getStringExtra("first_name");
@@ -89,18 +96,18 @@ public class ChangeSubActivity extends AppCompatActivity implements
         double lat = Double.parseDouble(previousIntent.getStringExtra("lat"));
         double lon = Double.parseDouble(previousIntent.getStringExtra("lon"));
 
-        // Create button
+        // Set the buttons
         submitButton = findViewById(R.id.submit_button);
         coordinatesButton = findViewById(R.id.coordinates_button);
 
-        // Getting locationText TextView
+        // Set the location text with the previous location submitted
         locationText = findViewById(R.id.locationText);
         locationText.setText("Current Coordinates:\nLatitude: " + String.format( "%.2f", lat) + "\n" +
                 "Longitude: " + String.format("%.2f", lon));
         st_coordinates = "Latitude: " + lat + "  Longitude: " + lon;
 
 
-        // Getting EditTexts objects
+        // Getting and setting EditTexts objects
         et_firstname = findViewById(R.id.et_firstName);
         et_firstname.setText(firstName);
         et_middlename = findViewById(R.id.et_middleName);
@@ -122,6 +129,7 @@ public class ChangeSubActivity extends AppCompatActivity implements
         et_subunit = findViewById(R.id.et_subUnit);
         et_subunit.setText(subUnit);
 
+        //determine boolean values for checkboxes
         boolean bronzeBool = false;
         boolean flagBool = false;
         if (!holder.matches("0")) {
@@ -137,11 +145,11 @@ public class ChangeSubActivity extends AppCompatActivity implements
         cb_bronze.setChecked(bronzeBool);
         cb_flag_pres.setChecked(flagBool);
 
-        //This will populate the drop down items for the condition of the grave
+        //Populate the drop down items for the condition of the grave
         //spinner_condition is the name of the ID in the activity_grave_registry.xml
         spinner = findViewById(R.id.spinner_condition);
 
-        //This creates a custom adapter (fills our spinner with text) from the array we made in
+        //Creates a custom adapter (fills our spinner with text) from the array we made in
         // strings.xml, labeled "condition"
         //simple_spinner_item is a custom layout given by android
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -149,7 +157,7 @@ public class ChangeSubActivity extends AppCompatActivity implements
                 R.array.condition,
                 android.R.layout.simple_spinner_item);
 
-        //This sets the layout for the drop down item
+        //Sets the layout for the drop down item
         //simple_spinner_dropdown_item is a custom layout given by android
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -157,14 +165,14 @@ public class ChangeSubActivity extends AppCompatActivity implements
         //Now our spinner can view our items in the drop down
         spinner.setAdapter(adapter);
 
-        //This allows our spinner to listen for the selected items from the drop down
+        //Allows the spinner to listen for the selected items from the drop down
         spinner.setOnItemSelectedListener(this);
 
         // Sets the spinner at the submitted value
         spinner.setSelection(getIndex(spinner, condition));
 
 
-        //Sets a OnClickListener to wait for the Get Coordinates Button to be clicked and populate the latitude and longitutde
+        //Sets a OnClickListener to wait for the Get Coordinates Button to be clicked and populate the latitude and longitude
         coordinatesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -198,7 +206,7 @@ public class ChangeSubActivity extends AppCompatActivity implements
                 st_subunit = et_subunit.getText().toString();
                 st_condition = spinner.getSelectedItem().toString();
 
-                // Get checkbox objects
+                // Get checkbox values
                 if (cb_flag_pres.isChecked()) {
                     has_flag = "1";
                 }
@@ -213,36 +221,31 @@ public class ChangeSubActivity extends AppCompatActivity implements
                 }
 
 
+                // Error handling for required fields or proper format of birth and death year
                 if (st_lastname.matches("")) {
                     Toast.makeText(ChangeSubActivity.this, "Last name is required.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (st_cemetery.matches("")) {
                     Toast.makeText(ChangeSubActivity.this, "Cemetery is required.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (st_conflict.matches("")) {
                     Toast.makeText(ChangeSubActivity.this, "Conflict is required.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (!st_birth.matches("") && !st_birth.matches("\\d{4}$")) {
                     Toast.makeText(ChangeSubActivity.this, "Birth year must be 4 digit number.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (!st_death.matches("") && !st_death.matches("\\d{4}$")) {
                     Toast.makeText(ChangeSubActivity.this, "Death year must be 4 digit number.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else if (st_coordinates.matches("")) {
                     Toast.makeText(ChangeSubActivity.this, "Click the 'Get Coordinates' button to save your location", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else if (st_condition.matches("Select Condition")) {
                     Toast.makeText(ChangeSubActivity.this, "Please select a condition.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else {
 
+                    // Dialog box to ask User if they want to suggest the change or not
                     AlertDialog alertDialog = new AlertDialog.Builder(ChangeSubActivity.this).create();
                     alertDialog.setTitle("Suggest this Change?");
                     alertDialog.setMessage("Are you sure you want to suggest this change?");
@@ -272,11 +275,16 @@ public class ChangeSubActivity extends AppCompatActivity implements
 
     }
 
+    /**
+     * A method ot send a POST request to the server to store the suggested change
+     * @param id the original marker id
+     */
     void suggestChange(String id) {
 
+        // The URL for the php file
         String HttpUrl = "http://10.0.2.2/change_suggestion.php?Marker_ID=" + id;
 
-        // Creating string request with post method.
+        // Creating a string request with post method.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, HttpUrl,
                 new Response.Listener<String>() {
                     @Override
@@ -356,6 +364,12 @@ public class ChangeSubActivity extends AppCompatActivity implements
     {
     }
 
+    /**
+     * The getIndex method
+     * @param spinner the spinner
+     * @param myString the string value
+     * @return the index
+     */
     private int getIndex(Spinner spinner, String myString)
     {
         int index = 0;

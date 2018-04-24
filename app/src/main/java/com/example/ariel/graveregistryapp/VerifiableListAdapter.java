@@ -14,33 +14,62 @@ import android.widget.TextView;
 
 public class VerifiableListAdapter extends BaseAdapter {
 
+    // The activity that will use the list adapter
     public VerifiableActivity activity;
 
+    /**
+     * Constructor for VerifiableListAdapter
+     * @param va the verifiable activity that will use the adapter
+     */
     VerifiableListAdapter(VerifiableActivity va) {
         this.activity = va;
     }
 
+    /**
+     * Gets the number of entries
+     * @return the number of entries
+     */
     @Override
     public int getCount() {
         return activity.entries.size();
     }
 
+    /**
+     * Gets the item
+     * @param i the count
+     * @return the item
+     */
     @Override
     public Object getItem(int i) {
         return null;
     }
 
+    /**
+     * Gets the itemID
+     * @param i the count
+     * @return the item ID
+     */
     @Override
     public long getItemId(int i) {
         return 0;
     }
 
+    /**
+     * A static ViewHolderItem class with name, cemetery, and conflict
+     */
     static class ViewHolderItem {
         TextView name;
         TextView cemetery;
         TextView conflict;
     }
 
+    /**
+     * The getView method for the adapter
+     * @param i the count
+     * @param convertView the view
+     * @param parent the parent
+     * @return  the view
+     */
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
 
@@ -49,9 +78,9 @@ public class VerifiableListAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.cell, null);
 
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.cemetery = (TextView) convertView.findViewById(R.id.cemetery);
-            holder.conflict = (TextView) convertView.findViewById(R.id.conflict);
+            holder.name = convertView.findViewById(R.id.name);
+            holder.cemetery = convertView.findViewById(R.id.cemetery);
+            holder.conflict = convertView.findViewById(R.id.conflict);
 
             convertView.setTag(holder);
 

@@ -22,7 +22,6 @@
     <string name="change_submission">Suggest a Change</string>
     <string name="new_coordinates">Get New Coordinates</string>
     <string name="submit_change">Submit Suggested Changes</string>
-
     <string name="conflict" translatable="false" >Conflict</string>
     <string name="rank">Rank</string>
     <string name="middle_name">Middle Name/Initial</string>

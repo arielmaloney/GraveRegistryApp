@@ -18,6 +18,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+/**
+ * The Register Activity
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     // URL to the insert_user php file
@@ -36,12 +39,16 @@ public class RegisterActivity extends AppCompatActivity {
     //Creating Volley RequestQueue
     RequestQueue requestQueue;
 
+    /**
+     * The onCreate method for the Register Activity
+     * @param savedInstanceState the saved instance state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Retrieves the values from the EditText fields
+        // Sets the EditText fields
         register_email = findViewById(R.id.et_email_register);
         register_firstname = findViewById(R.id.et_firstname_reg);
         register_lastname = findViewById(R.id.et_lastname_reg);
@@ -52,10 +59,9 @@ public class RegisterActivity extends AppCompatActivity {
         // Creating Volley newRequestQueue
         requestQueue = Volley.newRequestQueue(RegisterActivity.this);
 
-
+        // Creates an OnClickListener to wait for the register button to be clicked and register the User
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Code here executes on main thread after user presses button
 
                 // Creates string objects from the EditText objects
                 register_email_string = register_email.getText().toString();
@@ -64,19 +70,17 @@ public class RegisterActivity extends AppCompatActivity {
                 register_password_string = register_password.getText().toString();
                 register_confirmpass_string = register_confirmpass.getText().toString();
 
+                // Error handling for required fields and proper formatting
                 if (register_email_string.matches("") || register_firstName_string.matches("")
                         || register_lastName_string.matches("") || register_password_string.matches("")
                         || register_confirmpass_string.matches("")) {
                     Toast.makeText(RegisterActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else if (!isEmailValid(register_email_string)) {
                     Toast.makeText(RegisterActivity.this, "Not a valid email address.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else if (!register_password_string.matches(register_confirmpass_string)) {
                     Toast.makeText(RegisterActivity.this, "The passwords do not match.", Toast.LENGTH_SHORT). show();
-                    return;
                 }
                 else {
 
@@ -131,15 +135,22 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-
-
+    /**
+     * Sends the User to the Login screen upon clicking the text view
+     * This is set in the login_activity.xml
+     * @param view the view
+     */
     public void goToLogin(View view)
     {
         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 
-    //Determines if email address is valid
+    /**
+     * Determines if the email is a valid email address
+     * @param email the entered email address
+     * @return boolean
+     */
     boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
